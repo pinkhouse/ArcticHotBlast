@@ -1,6 +1,5 @@
 #include "Game.h"
 
-
 Game::Game()
 {
 	devMode = true;
@@ -10,6 +9,8 @@ Game::Game()
 	window->setFramerateLimit(200);
 	mainCamera = sf::View(sf::FloatRect(0, 0, 1280, 720));
 	window->setView(mainCamera);
+
+	player = new Player(sf::Vector2f(100, 100));
 	map = new Map();
 }
 
@@ -33,6 +34,7 @@ int Game::run()
 #pragma endregion
 		window->clear(sf::Color::Magenta);
 #pragma region Drawing
+		window->draw(*player);
 		this->window->draw(*map);
 
 		if (devMode)

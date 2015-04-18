@@ -1,4 +1,5 @@
 #include "SFML\Graphics.hpp"
+#include "Player.h"
 #include "Map.h"
 #include "CollidersDB.h"
 #pragma once
@@ -12,6 +13,7 @@ public:
 private:
 	bool devMode;
 	CollidersDB* collidersDB;
+	Player* player;
 	sf::RenderWindow* window;
 	sf::ContextSettings windowSettings;
 	sf::View mainCamera;
