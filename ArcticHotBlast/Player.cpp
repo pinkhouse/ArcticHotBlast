@@ -87,7 +87,7 @@ void Player::checkInput(sf::Event& event)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && isGrounded)
 	{
-		fallingSpeed = -650;
+		fallingSpeed = -600;
 		isGrounded = false;
 		standingOn = 0;
 	}

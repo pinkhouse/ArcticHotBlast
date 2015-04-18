@@ -123,3 +123,8 @@ sf::Vector2f Collider::getPosition()
 {
 	return this->marker.getPosition();
 }
+
+sf::Vector2f Collider::getCenter()
+{
+	return sf::Vector2f(this->getBounds().left + this->getBounds().width / 2, this->getBounds().top + this->getBounds().height / 2);
+}

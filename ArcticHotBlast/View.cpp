@@ -23,14 +23,14 @@ void View::update()
 
 	float moveBorder = AssetLibrary::instance()->mainCamera->getCenter().x + 100;
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-	{
-		
 		if (CollidersDB::instance()->player->getPosition().x > moveBorder)		
 		{
-			AssetLibrary::instance()->mainCamera->move( CollidersDB::instance()->player->getPosition().x - moveBorder, 0);
+			cameraOffset = CollidersDB::instance()->player->getPosition().x - moveBorder;
+			while (cameraOffset > 1.0f)
+			{ 
+				--cameraOffset;
+				AssetLibrary::instance()->mainCamera->move(1, 0);
+			}
 		}
-		
-	}
 
 }

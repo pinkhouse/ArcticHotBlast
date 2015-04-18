@@ -1,6 +1,7 @@
 #include "Map.h"
 #include "CollidersDB.h"
 #include "AssetLibrary.h"
+#include <iostream>
 
 Map::Map()
 {
@@ -8,9 +9,15 @@ Map::Map()
 	addGroundParts(5);
 	groundCollider = new Collider(sf::Vector2f(1280.0f, 32.0f), sf::Vector2f(0.0f, 688.0f), sf::Vector2f(0.0f, 0.0f));
 	CollidersDB::ground = groundCollider;
-	platform = Platform(sf::Vector2f(500.0f, 496.0f), 4);
-}
+	mapPartBuilder = new MapPart1();
+	mapPartBuilder->createNewMapPart(0.0f);
+	mapPart = mapPartBuilder->getMapPart();
 
+	for each (Platform* platform in mapPart->getPlatforms())
+	{
+		platforms.push_back(platform);
+	}
+}
 
 Map::~Map()
 {
@@ -22,7 +29,10 @@ void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
 		target.draw(groundPart);
 	}
-	platform.draw(target, states);
+	for each (Platform *platform in platforms)
+	{
+		platform->draw(target, states);
+	}
 }
 
 void Map::addGroundParts(int howMany)

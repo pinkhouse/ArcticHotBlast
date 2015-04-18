@@ -3,13 +3,13 @@
 class MapPartBuilder
 {
 public:
-	MapPartBuilder();
+	virtual void createNewMapPart( float x);
 	~MapPartBuilder();
-	MapPart getMapPart();
-
-	virtual void buildPlatforms() = 0;
-	virtual void buildEnemySpawnSpots() = 0;
-	virtual void buildItemSpawnSpots() = 0;
+	MapPart* getMapPart();
+	MapPartBuilder();
+	virtual void buildPlatforms(float x) = 0;
+	//virtual void buildEnemySpawnSpots() = 0;
+	//virtual void buildItemSpawnSpots() = 0;
 protected:
-	MapPart mapPart;
+	MapPart* mapPart;
 };

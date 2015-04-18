@@ -78,15 +78,19 @@
     <ClCompile Include="AssetLibrary.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollidersDB.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MapPart1.cpp" />
     <ClCompile Include="MapPartBuilder.cpp" />
+    <ClCompile Include="Pinguin.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapPart.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Settings.cpp" />
+    <ClCompile Include="Snowman.cpp" />
     <ClCompile Include="View.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -94,14 +98,18 @@
     <ClInclude Include="AssetLibrary.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollidersDB.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="MapPart1.h" />
     <ClInclude Include="MapPartBuilder.h" />
+    <ClInclude Include="Pinguin.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapPart.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Settings.h" />
+    <ClInclude Include="Snowman.h" />
     <ClInclude Include="View.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

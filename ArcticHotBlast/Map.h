@@ -4,6 +4,9 @@
 #include "Collider.h"
 #include "CollidersDB.h"
 #include "Platform.h"
+#include "MapPartBuilder.h"
+#include "MapPart1.h"
+
 class Map : public sf::Drawable
 {
 public:
@@ -13,9 +16,11 @@ public:
 	sf::Texture* textureMap;
 	std::vector<sf::Sprite> groundParts;
 	Collider* groundCollider;
-
+	void update();
 private:
 	void addGroundParts(int howMany);
-	Platform platform;
+	std::vector<Platform*> platforms;
+	MapPartBuilder* mapPartBuilder;
+	MapPart* mapPart;
 };
 

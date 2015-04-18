@@ -13,5 +13,6 @@ public:
 
 private:
 	int scene;
+	float cameraOffset;
 };
 
