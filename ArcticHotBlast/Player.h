@@ -36,12 +36,15 @@ private:
 	float gravity;
 	float walkSpeed;
 	float currentSpeed;
+	std::vector<Collider*>platformsToCheck;
+	Collider* standingOn = 0;
 #pragma endregion
 	
 #pragma region Functions
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	void checkInput(sf::Event& event);
 	void potentialEnergy();
+	void checkPlatformsCollision();
 #pragma endregion
 
 };

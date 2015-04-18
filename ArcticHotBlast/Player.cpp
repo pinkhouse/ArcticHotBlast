@@ -24,8 +24,8 @@ Player::Player(sf::Vector2f position)
 	this->currentSpeed = 0.0f;
 	this->armRotated = false;
 	this->isGrounded = false;
-	this->fallingSpeed = 0.0f;;
-	this->collider = new Collider(sf::Vector2f(64.0f, 128.0), this->body.getPosition());
+	this->fallingSpeed = 0.0f;
+	this->collider = new Collider(sf::Vector2f(56.0f, 128.0), this->body.getPosition(), sf::Vector2f(28.0f,128.0f));
 	CollidersDB::instance()->player = collider;
 }
 
@@ -50,9 +50,14 @@ bool Player::update(sf::Time& frameTime, sf::Event &event)
 	}
 
 	this->body.move(currentSpeed * frameTime.asSeconds(),0);
-	collider->update(sf::Vector2f(body.getPosition().x, body.getPosition().y - body.getLocalBounds().height/2));
+	collider->update(body.getPosition());
 	this->arm.setPosition(body.getPosition().x + armLocation.x, body.getPosition().y + armLocation.y);
 	this->arm.setRotation(armRotation);
+	checkPlatformsCollision();
+	if (isGrounded)
+	{
+		fallingSpeed = 0.0f;
+	}
 	return false;
 }
 
@@ -61,8 +66,9 @@ void Player::checkInput(sf::Event& event)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && isGrounded)
 	{
-		fallingSpeed = -600;
+		fallingSpeed = -650;
 		isGrounded = false;
+		standingOn = 0;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
@@ -154,3 +160,37 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	target.draw(arm);
 }
 
+void Player::checkPlatformsCollision()
+{
+	if (standingOn != 0)
+	{
+		if (!collider->checkCollision(*standingOn))
+		{
+			this->isGrounded = false;
+			standingOn = 0;
+		}
+	}
+	else
+	{
+		if (platformsToCheck.size() > 0)
+		{
+			for (Collider* platform : platformsToCheck)
+			{
+				if (collider->checkCollision(*platform))
+				{
+					body.setPosition(sf::Vector2f(body.getPosition().x, platform->getBounds().top));
+					this->isGrounded = true;
+					standingOn = platform;
+				}
+			}
+		}
+		platformsToCheck.clear();
+		for (Collider* platform : *CollidersDB::instance()->platforms)
+		{
+			if (collider->getBounds().top + collider->getBounds().height <= platform->getBounds().top)
+			{
+				platformsToCheck.push_back(platform);
+			}
+		}
+	}
+}
