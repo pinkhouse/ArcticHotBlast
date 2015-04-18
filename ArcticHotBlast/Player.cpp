@@ -15,7 +15,6 @@ Player::Player(sf::Vector2f position)
 	this->arm.setPosition(position.x,position.y+75);
 	this->armLocation = sf::Vector2f(body.getPosition().x - arm.getPosition().x, body.getPosition().y - arm.getPosition().y);
 	this->armRotation = 0;
-
 	this->gravity = 980.0f;
 	this->walkSpeed = 250.0f;
 	this->currentSpeed = 0.0f;
@@ -75,7 +74,6 @@ bool Player::update(sf::Time& frameTime, sf::Event &event)
 	collider->update(body.getPosition());
 	this->arm.setPosition(body.getPosition().x + armLocation.x, body.getPosition().y + armLocation.y);
 	this->arm.setRotation(static_cast<float>(armRotation));
-	this->arm.setRotation(armRotation);
 	checkPlatformsCollision();
 	if (isGrounded)
 	{

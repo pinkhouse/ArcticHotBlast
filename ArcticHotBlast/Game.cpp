@@ -7,7 +7,6 @@ Game::Game()
 	collidersDB = CollidersDB::instance();
 	assetLibrary = AssetLibrary::instance();
 	assetLibrary->initialize();
-	
 	windowSettings.antialiasingLevel = 8;
 	window = new sf::RenderWindow(sf::VideoMode(1280, 720), "Arctic Hot Blast", sf::Style::Close, windowSettings);
 	window->setFramerateLimit(200);
