@@ -2,6 +2,7 @@
 
 #include "SFML\Graphics.hpp"
 #include "Animation.h"
+#include "Collider.h"
 
 class Player:
 	public sf::Drawable
@@ -14,6 +15,7 @@ public:
 
 private:
 	sf::Time* frameTime;
+	Collider* collider;
 #pragma region Animation
 	Animation* walk;
 	Animation* jump;

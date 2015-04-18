@@ -30,7 +30,7 @@ int Game::run()
 				window->close();
 		}
 #pragma region GameLoop
-		
+		player->update(frameTime, event);
 #pragma endregion
 		window->clear(sf::Color::Magenta);
 #pragma region Drawing

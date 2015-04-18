@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "CollidersDB.h"
 
 Player::Player(sf::Vector2f position)
 {
@@ -17,10 +18,11 @@ Player::Player(sf::Vector2f position)
 	this->armLocation = position;
 	this->arm.setOrigin(arm.getLocalBounds().width / 2, 5);
 	this->arm.setPosition(armLocation);
-	this->gravity = 980.0f;
+	this->gravity = 98.0f;
 	this->isGrounded = false;
 
-	this->frameTime = new sf::Time;
+	this->collider = new Collider(sf::Vector2f(64.0f, 128.0), this->body.getPosition());
+	CollidersDB::instance()->player = collider;
 }
 
 Player::~Player()
@@ -31,7 +33,15 @@ Player::~Player()
 bool Player::update(sf::Time& frameTime, sf::Event &event)
 {
 	this->frameTime = &frameTime;
-	this->body.move(0,this->gravity * frameTime.asSeconds());
+	if (collider->checkCollision(*CollidersDB::instance()->ground))
+	{
+		isGrounded = true;
+	}
+	if (!isGrounded)
+	{
+		this->body.move(0, this->gravity * frameTime.asSeconds());
+	}
+	collider->update(body.getPosition());
 	return false;
 }
 
