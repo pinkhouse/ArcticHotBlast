@@ -1,4 +1,5 @@
 #include "SFML\Graphics.hpp"
+#include "Player.h"
 #pragma once
 class Game
 {
@@ -8,6 +9,7 @@ public:
 	int run();
 
 private:
+	Player* player;
 	sf::RenderWindow* window;
 	sf::ContextSettings windowSettings;
 	sf::View mainCamera;

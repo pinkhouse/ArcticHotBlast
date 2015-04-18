@@ -1,6 +1,5 @@
 #include "Game.h"
 
-
 Game::Game()
 {
 	windowSettings.antialiasingLevel = 8;
@@ -8,6 +7,8 @@ Game::Game()
 	window->setFramerateLimit(200);
 	mainCamera = sf::View(sf::FloatRect(0, 0, 1280, 720));
 	window->setView(mainCamera);
+
+	player = new Player(sf::Vector2f(100, 100));
 }
 
 Game::~Game()
@@ -30,7 +31,7 @@ int Game::run()
 #pragma endregion
 		window->clear(sf::Color::White);
 #pragma region Drawing
-		
+		window->draw(*player);
 #pragma endregion
 		window->display();
 	}
