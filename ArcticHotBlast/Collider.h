@@ -16,6 +16,8 @@ public:
 	bool checkMouseOver();
 	void setOrigin(sf::Vector2f origin);
 	void setSize(sf::Vector2f size);
+	sf::Vector2f getPosition();
+
 private:
 	sf::RectangleShape marker;
 	bool _checkCollision(Collider& collider1, Collider& collider2);

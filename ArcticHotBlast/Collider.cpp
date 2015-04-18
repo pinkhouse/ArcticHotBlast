@@ -118,3 +118,8 @@ bool Collider::checkMouseOver()
 		return false;
 	}
 }
+
+sf::Vector2f Collider::getPosition()
+{
+	return this->marker.getPosition();
+}

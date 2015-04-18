@@ -5,7 +5,8 @@ AssetLibrary* AssetLibrary::_instance = 0;
 sf::View* AssetLibrary::mainCamera = 0;
 sf::RenderWindow* AssetLibrary::mainWindow = 0;
 sf::Texture* AssetLibrary::textureMap = 0;
-sf::Texture* AssetLibrary::texturePlayer = 0;
+sf::Texture* AssetLibrary::textureBody = 0;
+sf::Texture* AssetLibrary::textureArm = 0;
 
 AssetLibrary::AssetLibrary()
 {
@@ -27,9 +28,13 @@ AssetLibrary* AssetLibrary::instance()
 
 void AssetLibrary::loadTextures()
 {
-	if (this->texturePlayer->loadFromFile("data/img/player/body.png"))
+	if (this->textureBody->loadFromFile("data/img/player/body.png"))
 	{
 		std::cout << "PLAYER BODY TEXTURE LOADED\n";
+	}
+	if (this->textureArm->loadFromFile("data/img/player/arm.png"))
+	{
+		std::cout << "PLAYER ARM TEXTURE LOADED\n";
 	}
 	if (this->textureMap->loadFromFile("data/img/map.png"))
 	{
@@ -39,7 +44,8 @@ void AssetLibrary::loadTextures()
 
 void AssetLibrary::initialize()
 {
-	this->texturePlayer = new sf::Texture();
+	this->textureBody = new sf::Texture();
 	this->textureMap = new sf::Texture();
+	this->textureArm = new sf::Texture();
 	this->loadTextures();
 }
