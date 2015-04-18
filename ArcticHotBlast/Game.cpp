@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <iostream>
 
 Game::Game()
 {
@@ -6,7 +7,6 @@ Game::Game()
 	collidersDB = CollidersDB::instance();
 	assetLibrary = AssetLibrary::instance();
 	assetLibrary->initialize();
-	
 	windowSettings.antialiasingLevel = 8;
 	window = new sf::RenderWindow(sf::VideoMode(1280, 720), "Arctic Hot Blast", sf::Style::Close, windowSettings);
 	window->setFramerateLimit(200);
@@ -42,8 +42,8 @@ int Game::run()
 #pragma endregion
 		window->clear(sf::Color::Magenta);
 #pragma region Drawing
-		window->draw(*player);
 		this->window->draw(*map);
+		this->window->draw(*player);
 
 		if (devMode)
 		{

@@ -3,6 +3,7 @@
 #include <vector>
 #include "Collider.h"
 #include "CollidersDB.h"
+#include "Platform.h"
 class Map : public sf::Drawable
 {
 public:
@@ -15,5 +16,6 @@ public:
 
 private:
 	void addGroundParts(int howMany);
+	Platform platform;
 };
 
