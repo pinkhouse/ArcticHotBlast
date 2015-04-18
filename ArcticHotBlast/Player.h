@@ -29,13 +29,19 @@ private:
 	sf::Vector2f armLocation;
 #pragma endregion
 #pragma region Physics
-	float gravity;
 	bool isGrounded;
+	bool armRotated;
+	int  armRotation;
+	float fallingSpeed;
+	float gravity;
+	float walkSpeed;
+	float currentSpeed;
 #pragma endregion
 	
 #pragma region Functions
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	void checkInput(sf::Event& event);
+	void potentialEnergy();
 #pragma endregion
 
 };
