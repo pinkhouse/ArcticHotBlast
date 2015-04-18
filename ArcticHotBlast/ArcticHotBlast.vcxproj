@@ -79,6 +79,7 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollidersDB.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapPartBuilder.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -93,6 +94,7 @@
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollidersDB.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="MapPartBuilder.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Map.h" />
