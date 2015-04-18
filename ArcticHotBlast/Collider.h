@@ -21,5 +21,6 @@ public:
 private:
 	sf::RectangleShape marker;
 	bool _checkCollision(Collider& collider1, Collider& collider2);
+
 };
 

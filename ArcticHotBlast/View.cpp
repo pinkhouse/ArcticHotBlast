@@ -3,7 +3,6 @@
 
 View::View()
 {
-	scene = 0;
 }
 
 
@@ -27,10 +26,10 @@ void View::update()
 		{
 			cameraOffset = CollidersDB::instance()->player->getPosition().x - moveBorder;
 			while (cameraOffset > 1.0f)
-			{ 
+		{
 				--cameraOffset;
 				AssetLibrary::instance()->mainCamera->move(1, 0);
-			}
+		}
 		}
 
 }

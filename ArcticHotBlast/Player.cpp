@@ -6,19 +6,14 @@
 Player::Player(sf::Vector2f position)
 {
 	textureBody = AssetLibrary::instance()->textureBody;
-	textureArm = AssetLibrary::instance()->textureArm;
 	body.setTexture(*textureBody);
-	arm.setTexture(*textureArm);
 	this->body.setOrigin(body.getLocalBounds().width/2, body.getLocalBounds().height);
-	this->arm.setOrigin(5, arm.getLocalBounds().height / 2);
+
 	this->body.setPosition(position);
-	this->arm.setPosition(position.x,position.y+75);
-	this->armLocation = sf::Vector2f(body.getPosition().x - arm.getPosition().x, body.getPosition().y - arm.getPosition().y);
-	this->armRotation = 0;
+	this->weapon.setPosition(position);
 	this->gravity = 980.0f;
 	this->walkSpeed = 250.0f;
 	this->currentSpeed = 0.0f;
-	this->armRotated = false;
 	this->isGrounded = false;
 	this->touchingBorder = false;
 	this->fallingSpeed = 0.0f;;
@@ -71,9 +66,8 @@ bool Player::update(sf::Time& frameTime, sf::Event &event)
 				CollidersDB::instance()->leftBorder->getBounds().width + collider->getBounds().width/2, body.getPosition().y);
 		}
 	}
+	weapon.update(body.getPosition(), event);
 	collider->update(body.getPosition());
-	this->arm.setPosition(body.getPosition().x + armLocation.x, body.getPosition().y + armLocation.y);
-	this->arm.setRotation(static_cast<float>(armRotation));
 	checkPlatformsCollision();
 	if (isGrounded)
 	{
@@ -97,29 +91,44 @@ void Player::checkInput(sf::Event& event)
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
-		if (currentSpeed > -walkSpeed)
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		{
-			currentSpeed -= 3 * walkSpeed * this->frameTime->asSeconds();
+			currentSpeed = 0;
 		}
 		else
 		{
-			if (currentSpeed < -walkSpeed)
+			if (currentSpeed > -walkSpeed)
 			{
-				currentSpeed = -walkSpeed;
+				currentSpeed -= 3 * walkSpeed * this->frameTime->asSeconds();
+			}
+			else
+			{
+				if (currentSpeed < -walkSpeed)
+				{
+					currentSpeed = -walkSpeed;
+				}
 			}
 		}
+		
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
-		if (currentSpeed < walkSpeed)
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
-			currentSpeed += 3 * walkSpeed *this->frameTime->asSeconds();
+			currentSpeed = 0;
 		}
 		else
 		{
-			if (currentSpeed > walkSpeed)
+			if (currentSpeed < walkSpeed)
 			{
-				currentSpeed = walkSpeed;
+				currentSpeed += 3 * walkSpeed *this->frameTime->asSeconds();
+			}
+			else
+			{
+				if (currentSpeed > walkSpeed)
+				{
+					currentSpeed = walkSpeed;
+				}
 			}
 		}
 	}
@@ -146,26 +155,6 @@ void Player::checkInput(sf::Event& event)
 			}
 		}
 	}
-	if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up && !armRotated)
-	{
-		armRotated = true;
-		if (armRotation > -215)
-		armRotation -= 45;
-	}
-	if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Up)
-	{
-		armRotated = false;
-	}
-	if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Down && !armRotated)
-	{
-		armRotated = true;
-		if (armRotation < 45)
-		armRotation += 45;
-	}
-	if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Down)
-	{
-		armRotated = false;
-	}
 }
 void Player::potentialEnergy()
 {
@@ -177,7 +166,7 @@ void Player::potentialEnergy()
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(body);
-	target.draw(arm);
+	target.draw(weapon);
 }
 
 void Player::checkPlatformsCollision()

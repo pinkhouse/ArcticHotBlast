@@ -76,6 +76,7 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AssetLibrary.cpp" />
+    <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollidersDB.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -92,10 +93,12 @@
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Snowman.cpp" />
     <ClCompile Include="View.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AssetLibrary.h" />
+    <ClInclude Include="Coin.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollidersDB.h" />
     <ClInclude Include="Enemy.h" />
@@ -111,6 +114,7 @@
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Snowman.h" />
     <ClInclude Include="View.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

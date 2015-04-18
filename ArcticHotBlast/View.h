@@ -8,11 +8,8 @@ class View
 public:
 	View();
 	~View();
-
 	void update();
-
 private:
-	int scene;
 	float cameraOffset;
 };
 
