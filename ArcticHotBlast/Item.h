@@ -1,14 +1,19 @@
 #pragma once
-#include "SFML\Graphics.hpp"
+#include "AssetLibrary.h"
+#include "Collider.h"
 
 class Item :
 	public sf::Drawable
 {
 public:
-	Item() =delete;
 	virtual ~Item();
+	virtual bool update() = 0;
 
-private:
-	sf::RectangleShape name;
+protected:
+	Item();
+	sf::Sprite item;
+	Collider itemCollider;
+	sf::Texture* textureItem;
+	int idType;
 };
 

@@ -9,7 +9,7 @@ Game::Game()
 	assetLibrary->initialize();
 	windowSettings.antialiasingLevel = 8;
 	window = new sf::RenderWindow(sf::VideoMode(1280, 720), "Arctic Hot Blast", sf::Style::Close, windowSettings);
-	window->setFramerateLimit(200);
+	window->setFramerateLimit(500);
 	mainCamera = new sf::View(sf::FloatRect(0, 0, 1280, 720));
 	window->setView(*mainCamera);
 	Collider* leftBorder = new Collider(sf::Vector2f(32, 720), sf::Vector2f(-32.0f, 0.0f),

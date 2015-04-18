@@ -10,8 +10,5 @@ public:
 	~View();
 
 	void update();
-
-private:
-	int scene;
 };
 

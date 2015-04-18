@@ -3,7 +3,6 @@
 
 View::View()
 {
-	scene = 0;
 }
 
 
@@ -23,14 +22,8 @@ void View::update()
 
 	float moveBorder = AssetLibrary::instance()->mainCamera->getCenter().x + 100;
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	if (CollidersDB::instance()->player->getPosition().x > moveBorder)		
 	{
-		
-		if (CollidersDB::instance()->player->getPosition().x > moveBorder)		
-		{
-			AssetLibrary::instance()->mainCamera->move( CollidersDB::instance()->player->getPosition().x - moveBorder, 0);
-		}
-		
+		AssetLibrary::instance()->mainCamera->move( CollidersDB::instance()->player->getPosition().x - moveBorder, 0);
 	}
-
 }

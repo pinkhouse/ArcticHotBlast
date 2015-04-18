@@ -3,6 +3,7 @@
 #include "SFML\Graphics.hpp"
 #include "Animation.h"
 #include "Collider.h"
+#include "Weapon.h"
 
 class Player:
 	public sf::Drawable
@@ -21,19 +22,14 @@ private:
 	Animation* walk;
 	Animation* jump;
 #pragma endregion
-#pragma region Body parts
-	sf::Texture* textureBody;
-	sf::Texture* textureArm;
-	sf::Sprite body;
-	sf::Sprite arm;
 
-	sf::Vector2f armLocation;
-#pragma endregion
+	sf::Texture* textureBody;
+	sf::Sprite body;
+	Weapon weapon;
+
 #pragma region Physics
 	bool touchingBorder;
 	bool isGrounded;
-	bool armRotated;
-	int  armRotation;
 	float fallingSpeed;
 	float gravity;
 	float walkSpeed;

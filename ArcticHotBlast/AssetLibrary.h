@@ -11,7 +11,7 @@ public:
 	static sf::View* mainCamera;
 
 	static sf::Texture* textureBody;
-	static sf::Texture* textureArm;
+	static sf::Texture* textureWeapon;
 	static sf::Texture* textureMap;
 
 	void loadTextures();

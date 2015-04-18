@@ -6,8 +6,7 @@ sf::View* AssetLibrary::mainCamera = 0;
 sf::RenderWindow* AssetLibrary::mainWindow = 0;
 sf::Texture* AssetLibrary::textureMap = 0;
 sf::Texture* AssetLibrary::textureBody = 0;
-sf::Texture* AssetLibrary::textureArm = 0;
-
+sf::Texture* AssetLibrary::textureWeapon = 0;
 AssetLibrary::AssetLibrary()
 {
 }
@@ -32,7 +31,7 @@ void AssetLibrary::loadTextures()
 	{
 		std::cout << "PLAYER BODY TEXTURE LOADED\n";
 	}
-	if (this->textureArm->loadFromFile("data/img/player/arm.png"))
+	if (this->textureWeapon->loadFromFile("data/img/player/arm.png"))
 	{
 		std::cout << "PLAYER ARM TEXTURE LOADED\n";
 	}
@@ -46,6 +45,6 @@ void AssetLibrary::initialize()
 {
 	this->textureBody = new sf::Texture();
 	this->textureMap = new sf::Texture();
-	this->textureArm = new sf::Texture();
+	this->textureWeapon = new sf::Texture();
 	this->loadTextures();
 }
