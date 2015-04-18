@@ -9,9 +9,8 @@ public:
 	Map();
 	~Map();
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-	sf::Texture* textureGround;
+	sf::Texture* textureMap;
 	std::vector<sf::Sprite> groundParts;
-	//sf::Sprite groundPT;
 	Collider* groundCollider;
 
 private:

@@ -4,6 +4,10 @@ Game::Game()
 {
 	devMode = true;
 	collidersDB = CollidersDB::instance();
+	assetLibrary = AssetLibrary::instance();
+	assetLibrary->initialize();
+	assetLibrary->mainCamera = &this->mainCamera;
+	assetLibrary->mainWindow = this->window;
 	windowSettings.antialiasingLevel = 8;
 	window = new sf::RenderWindow(sf::VideoMode(1280, 720), "Frankenstein's Rabbit Commando", sf::Style::Close, windowSettings);
 	window->setFramerateLimit(200);

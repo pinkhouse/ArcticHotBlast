@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Map.h"
 #include "CollidersDB.h"
+#include "AssetLibrary.h"
 #pragma once
 class Game
 {
@@ -13,6 +14,7 @@ public:
 private:
 	bool devMode;
 	CollidersDB* collidersDB;
+	AssetLibrary* assetLibrary;
 	Player* player;
 	sf::RenderWindow* window;
 	sf::ContextSettings windowSettings;
