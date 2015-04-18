@@ -7,17 +7,19 @@ Game::Game()
 	collidersDB = CollidersDB::instance();
 	assetLibrary = AssetLibrary::instance();
 	assetLibrary->initialize();
-	assetLibrary->mainCamera = &this->mainCamera;
-	assetLibrary->mainWindow = this->window;
+	
 	windowSettings.antialiasingLevel = 8;
-	window = new sf::RenderWindow(sf::VideoMode(1280, 720), "Frankenstein's Rabbit Commando", sf::Style::Close, windowSettings);
-	window->setFramerateLimit(500);
-	mainCamera = sf::View(sf::FloatRect(0, 0, 1280, 720));
-	window->setView(mainCamera);
-
+	window = new sf::RenderWindow(sf::VideoMode(1280, 720), "Arctic Hot Blast", sf::Style::Close, windowSettings);
+	window->setFramerateLimit(200);
+	mainCamera = new sf::View(sf::FloatRect(0, 0, 1280, 720));
+	window->setView(*mainCamera);
+	Collider* leftBorder = new Collider(sf::Vector2f(32, 720), sf::Vector2f(-32.0f, 0.0f),
+		sf::Vector2f(0.0f, 0.0f));
+	CollidersDB::instance()->leftBorder = leftBorder;
 	player = new Player(sf::Vector2f(100, 100));
 	map = new Map();
-	//std::cout << mainCamera.getViewport().left;
+	assetLibrary->mainCamera = this->mainCamera;
+	assetLibrary->mainWindow = this->window;
 }
 
 Game::~Game()
@@ -37,6 +39,7 @@ int Game::run()
 		}
 #pragma region GameLoop
 		player->update(frameTime, event);
+		mainView.update();
 #pragma endregion
 		window->clear(sf::Color::Magenta);
 #pragma region Drawing

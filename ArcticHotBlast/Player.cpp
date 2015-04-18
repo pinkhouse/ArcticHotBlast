@@ -1,18 +1,15 @@
 #include "Player.h"
 #include "CollidersDB.h"
 #include <iostream>
+#include "AssetLibrary.h"
 
 Player::Player(sf::Vector2f position)
 {
-	if (textureBody.loadFromFile("data/img/player/body.png"))
-	{
-		this->body.setTexture(textureBody);
-	}
-	if (textureArm.loadFromFile("data/img/player/arm.png"))
-	{
-		this->arm.setTexture(textureArm);
-	}
-	this->body.setOrigin(body.getLocalBounds().width / 2, body.getLocalBounds().height);
+	textureBody = AssetLibrary::instance()->textureBody;
+	textureArm = AssetLibrary::instance()->textureArm;
+	body.setTexture(*textureBody);
+	arm.setTexture(*textureArm);
+	this->body.setOrigin(body.getLocalBounds().width/2, body.getLocalBounds().height);
 	this->arm.setOrigin(5, arm.getLocalBounds().height / 2);
 	this->body.setPosition(position);
 	this->arm.setPosition(position.x,position.y+75);
@@ -24,8 +21,9 @@ Player::Player(sf::Vector2f position)
 	this->currentSpeed = 0.0f;
 	this->armRotated = false;
 	this->isGrounded = false;
-	this->fallingSpeed = 0.0f;
-	this->collider = new Collider(sf::Vector2f(56.0f, 128.0), this->body.getPosition(), sf::Vector2f(28.0f,128.0f));
+	this->touchingBorder = false;
+	this->fallingSpeed = 0.0f;;
+	this->collider = new Collider(sf::Vector2f(56.0f, 128.0), this->body.getPosition(), sf::Vector2f(28.0f,128));
 	CollidersDB::instance()->player = collider;
 }
 
@@ -49,9 +47,34 @@ bool Player::update(sf::Time& frameTime, sf::Event &event)
 		this->body.move(0, fallingSpeed * frameTime.asSeconds());
 	}
 
-	this->body.move(currentSpeed * frameTime.asSeconds(),0);
+	if (currentSpeed != 0.0f)
+	{
+		if (!touchingBorder)
+		{
+			this->body.move(currentSpeed * frameTime.asSeconds(), 0);
+		}
+		else
+		{
+			if (currentSpeed > 0.0f)
+			{
+				this->body.move(currentSpeed * frameTime.asSeconds(), 0);
+				touchingBorder = false;
+			}
+			else
+			{
+				currentSpeed = 0.0f;
+			}
+		}
+		if (collider->checkCollision(*CollidersDB::instance()->leftBorder))
+		{
+			touchingBorder = true;
+			body.setPosition(CollidersDB::instance()->leftBorder->getBounds().left +
+				CollidersDB::instance()->leftBorder->getBounds().width + collider->getBounds().width/2, body.getPosition().y);
+		}
+	}
 	collider->update(body.getPosition());
 	this->arm.setPosition(body.getPosition().x + armLocation.x, body.getPosition().y + armLocation.y);
+	this->arm.setRotation(static_cast<float>(armRotation));
 	this->arm.setRotation(armRotation);
 	checkPlatformsCollision();
 	if (isGrounded)
@@ -76,7 +99,6 @@ void Player::checkInput(sf::Event& event)
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
-	
 		if (currentSpeed > -walkSpeed)
 		{
 			currentSpeed -= 3 * walkSpeed * this->frameTime->asSeconds();

@@ -4,6 +4,7 @@
 CollidersDB* CollidersDB::_instance = 0;
 Collider* CollidersDB::player = 0;
 Collider* CollidersDB::ground = 0;
+Collider* CollidersDB::leftBorder = 0;
 std::vector<Collider*>* CollidersDB::obstacles = new std::vector<Collider*>;
 std::vector<Collider*>* CollidersDB::platforms = new std::vector<Collider*>;
 std::vector<Collider*>* CollidersDB::items = new std::vector<Collider*>;
@@ -33,6 +34,11 @@ void CollidersDB::draw(sf::RenderWindow& window)
 	{
 		window.draw(*ground);
 	}
+	if (leftBorder != 0)
+	{
+		window.draw(*leftBorder);
+	}
+
 	if (platforms->size() > 0)
 	{
 		for (Collider* platform : *platforms)

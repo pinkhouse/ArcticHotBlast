@@ -16,19 +16,21 @@ public:
 private:
 	sf::Time* frameTime;
 	Collider* collider;
+
 #pragma region Animation
 	Animation* walk;
 	Animation* jump;
 #pragma endregion
 #pragma region Body parts
-	sf::Texture textureBody;
-	sf::Texture textureArm;
+	sf::Texture* textureBody;
+	sf::Texture* textureArm;
 	sf::Sprite body;
 	sf::Sprite arm;
 
 	sf::Vector2f armLocation;
 #pragma endregion
 #pragma region Physics
+	bool touchingBorder;
 	bool isGrounded;
 	bool armRotated;
 	int  armRotation;

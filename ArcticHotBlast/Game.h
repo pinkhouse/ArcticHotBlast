@@ -3,6 +3,8 @@
 #include "Map.h"
 #include "CollidersDB.h"
 #include "AssetLibrary.h"
+#include "View.h"
+
 #pragma once
 class Game
 {
@@ -18,7 +20,8 @@ private:
 	Player* player;
 	sf::RenderWindow* window;
 	sf::ContextSettings windowSettings;
-	sf::View mainCamera;
+	sf::View* mainCamera;
+	View mainView;
 	sf::Clock frameClock;
 	sf::Time frameTime;
 	Map* map;

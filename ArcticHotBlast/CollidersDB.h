@@ -7,6 +7,7 @@ public:
 	static CollidersDB* instance();
 	static Collider* player;
 	static Collider* ground;
+	static Collider* leftBorder;
 	static std::vector<Collider*>* obstacles;
 	static std::vector<Collider*>* items;
 	static std::vector<Collider*>* platforms;

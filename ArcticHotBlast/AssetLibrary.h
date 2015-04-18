@@ -10,7 +10,8 @@ public:
 	static sf::RenderWindow* mainWindow;
 	static sf::View* mainCamera;
 
-	static sf::Texture* texturePlayer;
+	static sf::Texture* textureBody;
+	static sf::Texture* textureArm;
 	static sf::Texture* textureMap;
 
 	void loadTextures();
