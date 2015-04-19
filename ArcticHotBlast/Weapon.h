@@ -7,13 +7,13 @@ class Weapon:
 	public sf::Drawable 
 {
 public:
-	Weapon();
+	Weapon(sf::Vector2f hookPoint);
 	~Weapon();
 
-	bool update(sf::Vector2f playerPosition, sf::Event& event);
-	void setPosition(sf::Vector2f armLocation);
-	void setPosition(float positionX, float positionY);
+	bool update(sf::Vector2f hookPoint, sf::Event& event);
 	sf::Vector2f getPosition();
+
+	Weapon();
 private:
 	sf::Sprite weapon;
 	sf::Texture* textureWeapon;

@@ -16,7 +16,6 @@ public:
 	static std::vector<Collider*>* enemies;
 	static std::vector<Collider*>* buttons;
 	void draw(sf::RenderWindow& window);
-	static sf::RenderWindow* gWindow;
 	void clearDb();
 protected:
 	CollidersDB();

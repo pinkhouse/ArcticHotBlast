@@ -1,16 +1,17 @@
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include "Weapon.h"
+#include "AssetLibrary.h"
+#include "CollidersDB.h"
 
-#include <iostream>
-
-Weapon::Weapon()
+Weapon::Weapon(sf::Vector2f hookPoint)
 {
 	this->textureWeapon = AssetLibrary::instance()->textureWeapon;
 	weapon.setTexture(*textureWeapon);
 
-	weapon.setOrigin(5, 22);
-	weapon.setPosition(armLocation.x, armLocation.y + 75);
+	weapon.setOrigin(5, 14);
+	weapon.setPosition(hookPoint);
 	this->armLocation = sf::Vector2f(armLocation.x - weapon.getPosition().x, armLocation.y - weapon.getPosition().y);
-	std::cout << weapon.getPosition().x << " " << weapon.getPosition().y << "\n";
 	armRotated = false;
 	armRotation = 0;
 }
@@ -18,45 +19,37 @@ Weapon::~Weapon()
 {
 }
 
-bool Weapon::update(sf::Vector2f playerPosition, sf::Event& event)
+Weapon::Weapon()
+{
+}
+
+bool Weapon::update(sf::Vector2f hookPoint, sf::Event& event)
 {
 	checkInput(event);
-	this->weapon.setPosition(playerPosition.x + armLocation.x, playerPosition.y + armLocation.y);
-	this->weapon.setRotation(static_cast<float>(armRotation));
-	return false;
-}
+	this->weapon.setPosition(hookPoint.x, hookPoint.y);
 
-void Weapon::setPosition(sf::Vector2f armLocation)
-{
-	weapon.setPosition(armLocation);
-}
-
-void  Weapon::setPosition(float positionX, float positionY)
-{
-	weapon.setPosition(positionX, positionY);
+	sf::Vector2i mPosition = sf::Mouse::getPosition(*AssetLibrary::instance()->mainWindow);
+	sf::Vector2f worldPos = AssetLibrary::instance()->mainWindow->mapPixelToCoords(mPosition);
+	float angler = atan2(CollidersDB::instance()->player->getCenter().y - worldPos.y, CollidersDB::instance()->player->getCenter().x - worldPos.x);
+	float angle = (angler * 180 / M_PI) + 180.0f;
+	this->weapon.setRotation(angle);
+	if (angle > 90 && angle< 270)
+	{
+		weapon.setScale(1, -1);
+		return false;
+	}
+	else
+	{
+		weapon.setScale(1, 1);
+		return true;
+	}
 }
 
 void Weapon::checkInput(sf::Event& event)
 {
-	if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up && !armRotated)
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
-		armRotated = true;
-		if (armRotation > -215)
-			armRotation -= 45;
-	}
-	if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Up)
-	{
-		armRotated = false;
-	}
-	if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Down && !armRotated)
-	{
-		armRotated = true;
-		if (armRotation < 45)
-			armRotation += 45;
-	}
-	if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Down)
-	{
-		armRotated = false;
+		//shoot
 	}
 }
 

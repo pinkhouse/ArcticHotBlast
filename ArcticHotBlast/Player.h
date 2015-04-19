@@ -19,13 +19,21 @@ private:
 	Collider* collider;
 
 #pragma region Animation
-	Animation* walk;
-	Animation* jump;
+	Animation* walkRight;
+	Animation* walkLeft;
+	Animation* stayRight;
+	Animation* stayLeft;
+	Animation* jumpRight;
+	Animation* jumpLeft;
+	Animation* airRight;
+	Animation* airLeft;
 #pragma endregion
 
 	sf::Texture* textureBody;
 	sf::Sprite body;
 	Weapon weapon;
+	sf::Vector2f armHookPoint;
+	bool facingRight;
 
 #pragma region Physics
 	bool touchingBorder;
@@ -43,6 +51,7 @@ private:
 	void checkInput(sf::Event& event);
 	void potentialEnergy();
 	void checkPlatformsCollision();
+	void updateHookPoint();
 #pragma endregion
 
 };

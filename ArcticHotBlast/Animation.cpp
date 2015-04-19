@@ -40,6 +40,25 @@ void Animation::play(sf::Time frameTime)
 	}
 }
 
+void Animation::playB(sf::Time frameTime)
+{
+	elapsedTime += frameTime;
+	if (elapsedTime.asSeconds() >= animationFrameTime.asSeconds())
+	{
+		if (currentFrame > 0)
+		{
+			currentFrame -= 1;
+		}
+		else
+		{
+			currentFrame = numberOfFrames - 1;
+		}
+		elapsedTime = sf::seconds(0.0f);
+		this->sprite.setTextureRect(sf::IntRect((animationSheetStart.x + spriteSize.x * currentFrame), animationSheetStart.y,
+			spriteSize.x, spriteSize.y));
+	}
+}
+
 void Animation::changeFps(float fps)
 {
 	this->fps = fps;

@@ -8,6 +8,7 @@ public:
 	Animation();
 	virtual ~Animation();
 	void play(sf::Time frameTime);
+	void playB(sf::Time frameTime);
 	void changeFps(float fps);
 	int getCurrentFrame();
 	float fps;

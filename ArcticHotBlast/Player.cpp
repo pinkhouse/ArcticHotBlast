@@ -7,10 +7,12 @@ Player::Player(sf::Vector2f position)
 {
 	textureBody = AssetLibrary::instance()->textureBody;
 	body.setTexture(*textureBody);
+	body.setTextureRect(sf::IntRect(0, 0, 96, 128));
 	this->body.setOrigin(body.getLocalBounds().width/2, body.getLocalBounds().height);
 
 	this->body.setPosition(position);
-	this->weapon.setPosition(position);
+	updateHookPoint();
+	this->weapon = Weapon(armHookPoint);
 	this->gravity = 980.0f;
 	this->walkSpeed = 250.0f;
 	this->currentSpeed = 0.0f;
@@ -19,6 +21,11 @@ Player::Player(sf::Vector2f position)
 	this->fallingSpeed = 0.0f;;
 	this->collider = new Collider(sf::Vector2f(56.0f, 128.0), this->body.getPosition(), sf::Vector2f(28.0f,128));
 	CollidersDB::instance()->player = collider;
+	facingRight = true;
+	this->walkRight = new Animation(body, 4, 12.0f, sf::Vector2i(0, 0), sf::Vector2i(96, 128));
+	this->walkLeft = new Animation(body, 4, 12.0f, sf::Vector2i(0, 128), sf::Vector2i(96, 128));
+	this->stayRight = new Animation(body, 2, 4.0f, sf::Vector2i(0, 256), sf::Vector2i(96, 128));
+	this->stayLeft = new Animation(body, 2, 4.0f, sf::Vector2i(192, 256), sf::Vector2i(96, 128));
 }
 
 Player::~Player()
@@ -43,9 +50,32 @@ bool Player::update(sf::Time& frameTime, sf::Event &event)
 
 	if (currentSpeed != 0.0f)
 	{
+		if (currentSpeed > 0.0)
+		{
+			if (facingRight)
+			{
+				walkRight->play(frameTime);
+			}
+			else
+			{
+				walkLeft->playB(frameTime);
+			}
+		}
+		else
+		{
+			if (!facingRight)
+			{
+				walkLeft->play(frameTime);
+			}
+			else
+			{
+				walkRight->playB(frameTime);
+			}
+		}
 		if (!touchingBorder)
 		{
 			this->body.move(currentSpeed * frameTime.asSeconds(), 0);
+			
 		}
 		else
 		{
@@ -66,7 +96,19 @@ bool Player::update(sf::Time& frameTime, sf::Event &event)
 				CollidersDB::instance()->leftBorder->getBounds().width + collider->getBounds().width/2, body.getPosition().y);
 		}
 	}
-	weapon.update(body.getPosition(), event);
+	else
+	{
+		if (facingRight)
+		{
+			stayRight->play(frameTime);
+		}
+		else
+		{
+			stayLeft->play(frameTime);
+		}
+	}
+	updateHookPoint();
+	this->facingRight = weapon.update(armHookPoint, event);
 	collider->update(body.getPosition());
 	checkPlatformsCollision();
 	if (isGrounded)
@@ -76,18 +118,19 @@ bool Player::update(sf::Time& frameTime, sf::Event &event)
 	return false;
 }
 
+void Player::updateHookPoint()
+{
+	armHookPoint = sf::Vector2f(body.getPosition().x - 8.0f, body.getPosition().y - 70.0f);
+}
+
 
 void Player::checkInput(sf::Event& event)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && isGrounded)
 	{
-		fallingSpeed = -600;
+		fallingSpeed = -575;
 		isGrounded = false;
 		standingOn = 0;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-	{
-		//shoot
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
@@ -165,8 +208,16 @@ void Player::potentialEnergy()
 }
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	target.draw(body);
-	target.draw(weapon);
+	if (facingRight)
+	{
+		target.draw(body);
+		target.draw(weapon);
+	}
+	else
+	{
+		target.draw(weapon);
+		target.draw(body);
+	}
 }
 
 void Player::checkPlatformsCollision()

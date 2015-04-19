@@ -4,6 +4,7 @@
 #include "CollidersDB.h"
 #include "AssetLibrary.h"
 #include "View.h"
+#include "Cursor.h"
 
 #pragma once
 class Game
@@ -25,5 +26,6 @@ private:
 	sf::Clock frameClock;
 	sf::Time frameTime;
 	Map* map;
+	Cursor cursor;
 };
 

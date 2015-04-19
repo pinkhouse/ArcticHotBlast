@@ -99,26 +99,6 @@ void Collider::setCollidionStatus(bool isColliding)
 	}
 }
 
-bool Collider::checkMouseOver()
-{
-	CollidersDB* db = CollidersDB::instance();
-	sf::Vector2i mPosition = sf::Mouse::getPosition(*db->gWindow);
-	sf::Vector2f worldPos = db->gWindow->mapPixelToCoords(mPosition);
-	if (worldPos.x >= this->getBounds().left &&
-		worldPos.x <= this->getBounds().left + this->getBounds().width &&
-		worldPos.y >= this->getBounds().top &&
-		worldPos.y <= this->getBounds().top + this->getBounds().height)
-	{
-		this->setCollidionStatus(true);
-		return true;
-	}
-	else
-	{
-		this->setCollidionStatus(false);
-		return false;
-	}
-}
-
 sf::Vector2f Collider::getPosition()
 {
 	return this->marker.getPosition();

@@ -9,7 +9,6 @@ std::vector<Collider*>* CollidersDB::obstacles = new std::vector<Collider*>;
 std::vector<Collider*>* CollidersDB::platforms = new std::vector<Collider*>;
 std::vector<Item*>* CollidersDB::items = new std::vector<Item*>;
 std::vector<Collider*>* CollidersDB::buttons = new std::vector<Collider*>;
-sf::RenderWindow* CollidersDB::gWindow = 0;
 
 CollidersDB::CollidersDB()
 {
