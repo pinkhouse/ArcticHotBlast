@@ -26,10 +26,10 @@ void MapPart::addPlatform(Platform* platform)
 //	enemySpawnSpots.push_back(enemySpawnSpot);
 //}
 //
-//void MapPart::addItemSpawnSpot(sf::Vector2f* itemSpawnSpot)
-//{
-//	itemSpawnSpots.push_back(itemSpawnSpot);
-//}
+void MapPart::addItem(Item* item)
+{
+	items.push_back(item);
+}
 
 std::vector<Platform*> MapPart::getPlatforms()
 {

@@ -43,7 +43,7 @@ bool Weapon::update(sf::Vector2f hookPoint, sf::Event& event)
 	}
 
 void Weapon::checkInput(sf::Event& event)
-	{
+{
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
 		//shoot

@@ -10,10 +10,10 @@ MapPartBuilder::~MapPartBuilder()
 {
 }
 
-void MapPartBuilder::createNewMapPart(float x)
+void MapPartBuilder::createNewMapPart(float beginPoint)
 {
 	mapPart = new MapPart();
-	buildPlatforms(x);
+	buildPlatforms(beginPoint);
 }
 
 MapPart* MapPartBuilder::getMapPart()

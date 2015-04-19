@@ -10,6 +10,8 @@ Map::Map()
 	groundCollider = new Collider(sf::Vector2f(1280.0f, 32.0f), sf::Vector2f(0.0f, 688.0f), sf::Vector2f(0.0f, 0.0f));
 	CollidersDB::ground = groundCollider;
 	generateMap(3);
+	offScreenCleared[0] = false;
+	offScreenCleared[1] = false;
 }
 
 Map::~Map()
@@ -56,17 +58,19 @@ void Map::addMapPart(MapPartBuilder* mapPartBuilder, float startingPoint)
 
 void Map::clearOffScreen()
 {
-	if (CollidersDB::instance()->player->getPosition().x > 6000 && mapParts.front()->startPoint < 5000)
+	if (!offScreenCleared[0] && CollidersDB::instance()->player->getPosition().x > 6000 && mapParts.front()->startPoint < 5000)
 	{
 		mapParts.front()->~MapPart();
 		mapParts.erase(mapParts.begin());
+		offScreenCleared[0] = true;
 	}
 	else
 	{
-		if (CollidersDB::instance()->player->getPosition().x > 11000 && mapParts.front()->startPoint < 10000)
+		if (!offScreenCleared[1] && CollidersDB::instance()->player->getPosition().x > 11000 && mapParts.front()->startPoint < 10000)
 		{
 			mapParts.front()->~MapPart();
 			mapParts.erase(mapParts.begin());
+			offScreenCleared[1] = true;
 		}
 	}
 }
@@ -86,11 +90,16 @@ void Map::generateMap(int numberOfParts)
 {
 	for (int i = 0; i < numberOfParts; i++)
 	{
-		int partID = std::rand() % 1;
+		int partID = std::rand() % 2;
+		std::cout << partID;
 		switch (partID)
 		{
 		case 0:
-			addMapPart(new MapPart1(), i * 500.0f);
+			addMapPart(new MapPart1(), i * 5000.0f);
+			break;
+		case 1:
+			addMapPart(new MapPart2(), i * 5000.0f);
+			break;
 		default:
 			break;
 		}
