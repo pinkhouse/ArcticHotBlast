@@ -7,9 +7,10 @@ public:
 	~MapPartBuilder();
 	MapPart* getMapPart();
 	MapPartBuilder();
-	virtual void buildPlatforms(float x) = 0;
+	virtual void buildPlatforms(float beginPoint) = 0;
 	//virtual void buildEnemySpawnSpots() = 0;
 	//virtual void buildItemSpawnSpots() = 0;
 protected:
+	float beginPoint;
 	MapPart* mapPart;
 };

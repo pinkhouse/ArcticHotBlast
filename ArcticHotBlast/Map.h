@@ -3,7 +3,6 @@
 #include <vector>
 #include "Collider.h"
 #include "CollidersDB.h"
-#include "Platform.h"
 #include "MapPartBuilder.h"
 #include "MapPart1.h"
 

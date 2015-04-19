@@ -1,19 +1,19 @@
 #pragma once
 
 #include "Item.h"
-#include "Animation.h"
 
-class Coin :
+class Upgrade :
 	public Item
 {
 public:
-	Coin();
-	virtual ~Coin();
+	Upgrade();
+	Upgrade(TypeID typeID);
+	virtual ~Upgrade();
 
-	virtual bool update(sf::Time& frameTime);
+	virtual bool update();
+	void setTypeID(TypeID typeID);
 
 private:
-	Animation* coinAnimation;
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 

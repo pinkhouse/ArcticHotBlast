@@ -92,6 +92,7 @@
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Snowman.cpp" />
+    <ClCompile Include="Upgrade.cpp" />
     <ClCompile Include="View.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
@@ -113,6 +114,7 @@
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Snowman.h" />
+    <ClInclude Include="Upgrade.h" />
     <ClInclude Include="View.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>

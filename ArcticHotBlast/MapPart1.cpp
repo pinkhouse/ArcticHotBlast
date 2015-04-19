@@ -10,12 +10,14 @@ MapPart1::~MapPart1()
 {
 }
 
-void MapPart1::buildPlatforms(float x)
+void MapPart1::buildPlatforms(float beginPoint)
 {
-	Platform* platform = new Platform(sf::Vector2f(x + 500.0f, 528.0f), 4);
-	mapPart->addPlatform(platform);
-
-	platform = new Platform(sf::Vector2f(x + 750.0f, 368.0f), 10);
-	mapPart->addPlatform(platform);
+	this->beginPoint = beginPoint;
+	createPlatform(100, 528, 5);
 }
 
+void MapPart1::createPlatform(float xx, float yy, int zz)
+{
+	Platform* platform = new Platform(sf::Vector2f(beginPoint + xx, yy), zz);
+	mapPart->addPlatform(platform);
+}

@@ -6,11 +6,8 @@ Weapon::Weapon()
 {
 	this->textureWeapon = AssetLibrary::instance()->textureWeapon;
 	weapon.setTexture(*textureWeapon);
-
 	weapon.setOrigin(5, 22);
-	weapon.setPosition(armLocation.x, armLocation.y + 75);
-	this->armLocation = sf::Vector2f(armLocation.x - weapon.getPosition().x, armLocation.y - weapon.getPosition().y);
-	std::cout << weapon.getPosition().x << " " << weapon.getPosition().y << "\n";
+	this->armLocation = sf::Vector2f(0, -75);
 	armRotated = false;
 	armRotation = 0;
 }
