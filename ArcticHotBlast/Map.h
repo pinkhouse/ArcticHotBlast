@@ -1,6 +1,6 @@
 #pragma once
 #include "SFML\Graphics.hpp"
-#include <vector>
+#include <deque>
 #include "Collider.h"
 #include "CollidersDB.h"
 #include "MapPartBuilder.h"
@@ -13,13 +13,16 @@ public:
 	~Map();
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	sf::Texture* textureMap;
-	std::vector<sf::Sprite> groundParts;
+	std::deque<sf::Sprite> groundParts;
 	Collider* groundCollider;
 	void update();
+	
 private:
 	void addGroundParts(int howMany);
-	std::vector<Platform*> platforms;
-	MapPartBuilder* mapPartBuilder;
-	MapPart* mapPart;
+	std::vector<MapPart*> mapParts;
+	void addMapPart(MapPartBuilder* mapPartBuilder, float startingPoint);
+	void clearOffScreen();
+	void scrollGround();
+	void generateMap(int numberOfParts);
 };
 

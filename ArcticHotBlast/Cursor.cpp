@@ -6,7 +6,7 @@
 
 Cursor::Cursor()
 {
-	textureCursor.loadFromFile("data/img/crosshair.png");
+	textureCursor.loadFromFile("data/img/misc/crosshair.png");
 	cursor.setTexture(textureCursor);
 	cursor.setOrigin(16.0f, 16.0f);
 }

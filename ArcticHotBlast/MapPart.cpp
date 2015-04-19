@@ -1,5 +1,5 @@
 #include "MapPart.h"
-
+#include <iostream>
 
 MapPart::MapPart()
 {
@@ -8,6 +8,12 @@ MapPart::MapPart()
 
 MapPart::~MapPart()
 {
+	for each (Platform *platform in platforms)
+	{
+		delete platform;
+	}
+	platforms.erase(platforms.begin(), platforms.end());
+	platforms.clear();
 }
 
 void MapPart::addPlatform(Platform* platform)
@@ -28,4 +34,12 @@ void MapPart::addPlatform(Platform* platform)
 std::vector<Platform*> MapPart::getPlatforms()
 {
 	return platforms;
+}
+
+void MapPart::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	for each (Platform *platform in platforms)
+	{
+		platform->draw(target, states);
+	}
 }

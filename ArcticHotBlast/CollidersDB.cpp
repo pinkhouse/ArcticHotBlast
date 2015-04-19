@@ -1,5 +1,5 @@
 #include "CollidersDB.h"
-
+#include <iostream>
 
 CollidersDB* CollidersDB::_instance = 0;
 Collider* CollidersDB::player = 0;
@@ -9,6 +9,7 @@ std::vector<Collider*>* CollidersDB::obstacles = new std::vector<Collider*>;
 std::vector<Collider*>* CollidersDB::platforms = new std::vector<Collider*>;
 std::vector<Item*>* CollidersDB::items = new std::vector<Item*>;
 std::vector<Collider*>* CollidersDB::buttons = new std::vector<Collider*>;
+int CollidersDB::ColliderID = 0;
 
 CollidersDB::CollidersDB()
 {

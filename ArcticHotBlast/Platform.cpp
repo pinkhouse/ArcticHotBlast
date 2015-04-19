@@ -1,5 +1,7 @@
 #include "Platform.h"
 #include "AssetLibrary.h"
+#include <iostream>
+#include <algorithm>
 
 Platform::Platform(sf::Vector2f position, int size)
 {
@@ -14,6 +16,8 @@ Platform::Platform()
 
 Platform::~Platform()
 {
+	CollidersDB::instance()->platforms->erase(std::remove(CollidersDB::instance()->platforms->begin(), CollidersDB::instance()->platforms->end(),
+		collider), CollidersDB::instance()->platforms->end());
 }
 
 void Platform::generatePlatform(int size)
@@ -40,7 +44,7 @@ void Platform::generatePlatform(int size)
 		block->setPosition(sf::Vector2f(position.x + 32 * i, position.y));
 		blocks.push_back(block);
 	}
-	Collider* collider = new Collider(sf::Vector2f(size * 32.0f, 32.0f), position, sf::Vector2f(0.0f, 0.0f));
+	collider = new Collider(sf::Vector2f(size * 32.0f, 32.0f), position, sf::Vector2f(0.0f, 0.0f));
 	CollidersDB::instance()->platforms->push_back(collider);
 }
 

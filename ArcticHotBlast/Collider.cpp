@@ -2,6 +2,11 @@
 #include <iostream>
 #include "CollidersDB.h"
 
+bool operator==(const Collider &c1, const Collider &c2)
+{
+	return (c1.ID == c2.ID);
+}
+
 Collider::Collider(sf::Vector2f size, sf::Vector2f position, sf::Vector2f origin)
 {
 	this->setSize(size);
@@ -18,6 +23,8 @@ Collider::Collider(sf::Vector2f size, sf::Vector2f position, sf::Vector2f origin
 	this->marker.setFillColor(sf::Color::Transparent);
 	this->marker.setOutlineThickness(1.0f);
 	this->isColliding = false;
+	ID = CollidersDB::instance()->ColliderID;
+	++CollidersDB::instance()->ColliderID;
 }
 
 Collider::Collider()

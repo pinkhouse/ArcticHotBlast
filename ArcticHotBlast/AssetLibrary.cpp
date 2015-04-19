@@ -35,7 +35,7 @@ void AssetLibrary::loadTextures()
 	{
 		std::cout << "PLAYER ARM TEXTURE LOADED\n";
 	}
-	if (this->textureMap->loadFromFile("data/img/map.png"))
+	if (this->textureMap->loadFromFile("data/img/map/map.png"))
 	{
 		std::cout << "MAP TEXTURE LOADED\n";
 	}

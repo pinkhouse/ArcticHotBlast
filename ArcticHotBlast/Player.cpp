@@ -22,8 +22,8 @@ Player::Player(sf::Vector2f position)
 	this->collider = new Collider(sf::Vector2f(56.0f, 128.0), this->body.getPosition(), sf::Vector2f(28.0f,128));
 	CollidersDB::instance()->player = collider;
 	facingRight = true;
-	this->walkRight = new Animation(body, 4, 12.0f, sf::Vector2i(0, 0), sf::Vector2i(96, 128));
-	this->walkLeft = new Animation(body, 4, 12.0f, sf::Vector2i(0, 128), sf::Vector2i(96, 128));
+	this->walkRight = new Animation(body, 3, 12.0f, sf::Vector2i(0, 0), sf::Vector2i(96, 128));
+	this->walkLeft = new Animation(body, 3, 12.0f, sf::Vector2i(0, 128), sf::Vector2i(96, 128));
 	this->stayRight = new Animation(body, 2, 4.0f, sf::Vector2i(0, 256), sf::Vector2i(96, 128));
 	this->stayLeft = new Animation(body, 2, 4.0f, sf::Vector2i(192, 256), sf::Vector2i(96, 128));
 }

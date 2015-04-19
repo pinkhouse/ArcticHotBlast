@@ -15,5 +15,6 @@ private:
 	sf::Texture* textureMap;
 	sf::Vector2f position;
 	void generatePlatform(int size);
+	Collider* collider;
 };
 

@@ -18,6 +18,8 @@ public:
 	void setSize(sf::Vector2f size);
 	sf::Vector2f getPosition();
 	sf::Vector2f getCenter();
+	int ID;
+	friend bool operator==(const Collider &c1, const Collider &c2);
 private:
 	sf::RectangleShape marker;
 	bool _checkCollision(Collider& collider1, Collider& collider2);

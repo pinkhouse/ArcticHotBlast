@@ -37,10 +37,14 @@ int Game::run()
 			if (event.type == sf::Event::Closed)
 				window->close();
 		}
+		if (window->hasFocus())
+		{
 #pragma region GameLoop
-		cursor.update(*window);
-		player->update(frameTime, event);
-		mainView.update();
+			cursor.update(*window);
+			player->update(frameTime, event);
+			mainView.update();
+			map->update();
+		}
 #pragma endregion
 		window->clear(sf::Color::Magenta);
 #pragma region Drawing

@@ -8,6 +8,8 @@ class MapPart
 public:
 	MapPart();
 	~MapPart();
+	float startPoint;
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	void addPlatform(Platform* platform);
 	//void addEnemySpawnSpot(sf::Vector2f* enemySpawnSpot);
 	//void addItemSpawnSpot(sf::Vector2f* itemSpawnSpot);
