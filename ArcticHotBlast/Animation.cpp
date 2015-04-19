@@ -23,37 +23,54 @@ Animation::~Animation()
 
 void Animation::play(sf::Time frameTime)
 {
-	elapsedTime += frameTime;
-	if (elapsedTime.asSeconds() >= animationFrameTime.asSeconds())
-	{ 
-		if (currentFrame < numberOfFrames - 1)
+	if (numberOfFrames != 1)
+	{
+		elapsedTime += frameTime;
+		if (elapsedTime.asSeconds() >= animationFrameTime.asSeconds())
 		{
-			currentFrame += 1;
+			if (currentFrame < numberOfFrames - 1)
+			{
+				currentFrame += 1;
+			}
+			else
+			{
+				currentFrame = 0;
+			}
+			elapsedTime = sf::seconds(0.0f);
+			this->sprite.setTextureRect(sf::IntRect((animationSheetStart.x + spriteSize.x * currentFrame), animationSheetStart.y,
+				spriteSize.x, spriteSize.y));
 		}
-		else
-		{
-			currentFrame = 0;
-		}
-		elapsedTime = sf::seconds(0.0f);
+	}
+	else
+	{
 		this->sprite.setTextureRect(sf::IntRect((animationSheetStart.x + spriteSize.x * currentFrame), animationSheetStart.y,
 			spriteSize.x, spriteSize.y));
 	}
+	
 }
 
 void Animation::playB(sf::Time frameTime)
 {
-	elapsedTime += frameTime;
-	if (elapsedTime.asSeconds() >= animationFrameTime.asSeconds())
+	if (numberOfFrames != 1)
 	{
-		if (currentFrame > 0)
+		elapsedTime += frameTime;
+		if (elapsedTime.asSeconds() >= animationFrameTime.asSeconds())
 		{
-			currentFrame -= 1;
+			if (currentFrame > 0)
+			{
+				currentFrame -= 1;
+			}
+			else
+			{
+				currentFrame = numberOfFrames - 1;
+			}
+			elapsedTime = sf::seconds(0.0f);
+			this->sprite.setTextureRect(sf::IntRect((animationSheetStart.x + spriteSize.x * currentFrame), animationSheetStart.y,
+				spriteSize.x, spriteSize.y));
 		}
-		else
-		{
-			currentFrame = numberOfFrames - 1;
-		}
-		elapsedTime = sf::seconds(0.0f);
+	}
+	else
+	{
 		this->sprite.setTextureRect(sf::IntRect((animationSheetStart.x + spriteSize.x * currentFrame), animationSheetStart.y,
 			spriteSize.x, spriteSize.y));
 	}

@@ -50,7 +50,6 @@ int Game::run()
 #pragma region Drawing
 		this->window->draw(*map);
 		this->window->draw(*player);
-
 		if (devMode)
 		{
 			collidersDB->draw(*window);

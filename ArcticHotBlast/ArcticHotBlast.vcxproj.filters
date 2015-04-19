@@ -108,6 +108,9 @@
     <ClCompile Include="MapPart4.cpp">
       <Filter>Source Files\Map\MapParts</Filter>
     </ClCompile>
+    <ClCompile Include="SnowBall.cpp">
+      <Filter>Source Files\Enemy</Filter>
+    </ClCompile>
     <ClCompile Include="CollidersDB.cpp">
       <Filter>Source Files\Containers</Filter>
     </ClCompile>
@@ -205,6 +208,9 @@
     </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SnowBall.h">
+      <Filter>Header Files\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
