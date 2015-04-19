@@ -9,7 +9,7 @@ Map::Map()
 	addGroundParts(5);
 	groundCollider = new Collider(sf::Vector2f(1280.0f, 32.0f), sf::Vector2f(0.0f, 688.0f), sf::Vector2f(0.0f, 0.0f));
 	CollidersDB::ground = groundCollider;
-	mapPartBuilder = new MapPart1();
+	mapPartBuilder = new MapPart3();
 	mapPartBuilder->createNewMapPart(0.0f);
 	mapPart = mapPartBuilder->getMapPart();
 

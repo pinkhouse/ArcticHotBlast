@@ -19,7 +19,7 @@ Player::Player(sf::Vector2f position)
 	this->isGrounded = false;
 	this->touchingBorder = false;
 	this->fallingSpeed = 0.0f;;
-	this->collider = new Collider(sf::Vector2f(56.0f, 128.0), this->body.getPosition(), sf::Vector2f(28.0f,128));
+	this->collider = new Collider(sf::Vector2f(56.0f, 116.0f), this->body.getPosition(), sf::Vector2f(28.0f,116));
 	CollidersDB::instance()->player = collider;
 	facingRight = true;
 	this->walkRight = new Animation(body, 4, 12.0f, sf::Vector2i(0, 0), sf::Vector2i(96, 128));
@@ -35,6 +35,7 @@ Player::~Player()
 
 bool Player::update(sf::Time& frameTime, sf::Event &event)
 {
+	std::cout << body.getPosition().x << " " << body.getPosition().y << "\n";
 	this->frameTime = &frameTime;
 	this->checkInput(event);
 	potentialEnergy();
