@@ -1,5 +1,6 @@
 #include "MapPart2.h"
 #include "Platform.h"
+#include "Coin.h"
 
 MapPart2::MapPart2()
 {
@@ -10,7 +11,7 @@ MapPart2::~MapPart2()
 {
 }
 
-void MapPart2::buildPlatforms(float beginPoint)
+void MapPart2::buildPlatforms()
 {
 	this->beginPoint = beginPoint;
 	createPlatform(150, 540, 10);
@@ -30,8 +31,12 @@ void MapPart2::buildPlatforms(float beginPoint)
 	createPlatform(4480, 244, 8);
 }
 
-void MapPart2::createPlatform(float xx, float yy, int zz)
+void MapPart2::buildEnemySpawnSpots()
 {
-	Platform* platform = new Platform(sf::Vector2f(beginPoint + xx, yy), zz);
-	mapPart->addPlatform(platform);
+
+}
+
+void MapPart2::buildItemSpawnSpots()
+{
+	createItemSpawnSpot(250.0f, 508);
 }

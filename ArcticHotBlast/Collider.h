@@ -1,5 +1,6 @@
 #pragma once
 #include "SFML\Graphics.hpp"
+//#include "Item.h"
 class Collider :
 	public sf::Drawable
 {

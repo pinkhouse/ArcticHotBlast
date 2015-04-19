@@ -9,7 +9,7 @@ std::vector<Collider*>* CollidersDB::obstacles = new std::vector<Collider*>;
 std::vector<Collider*>* CollidersDB::platforms = new std::vector<Collider*>;
 std::vector<Item*>* CollidersDB::items = new std::vector<Item*>;
 std::vector<Collider*>* CollidersDB::buttons = new std::vector<Collider*>;
-int CollidersDB::ColliderID = 0;
+int CollidersDB::ID = 0;
 
 CollidersDB::CollidersDB()
 {
@@ -57,7 +57,7 @@ void CollidersDB::draw(sf::RenderWindow& window)
 	{
 		for (Item* item : *items)
 		{
-			window.draw(*item);
+			window.draw(*item->collider);
 		}
 	}
 	if (buttons->size() > 0)
@@ -78,7 +78,7 @@ void CollidersDB::clearDb()
 	delete buttons;
 	player = 0;
 	ground = 0;
-	obstacles = new std::vector<Collider*>;
-	items = new std::vector<Item*>;
-	buttons = new std::vector<Collider*>;
+	obstacles = new std::vector < Collider* > ;
+	items = new std::vector < Item* > ;
+	buttons = new std::vector < Collider* > ;
 }

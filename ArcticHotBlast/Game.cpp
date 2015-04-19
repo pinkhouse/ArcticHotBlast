@@ -43,7 +43,7 @@ int Game::run()
 			cursor.update(*window);
 			player->update(frameTime, event);
 			mainView.update();
-			map->update();
+			map->update(frameTime);
 		}
 #pragma endregion
 		window->clear(sf::Color::Magenta);

@@ -42,11 +42,14 @@ void Map::addGroundParts(int howMany)
 	}
 }
 
-void Map::update()
+void Map::update(sf::Time& frameTime)
 {
 	scrollGround();
 	clearOffScreen();
-
+	for (MapPart* mapPart : mapParts)
+	{
+		mapPart->update(frameTime);
+	}
 }
 
 void Map::addMapPart(MapPartBuilder* mapPartBuilder, float startingPoint)
@@ -91,14 +94,13 @@ void Map::generateMap(int numberOfParts)
 	for (int i = 0; i < numberOfParts; i++)
 	{
 		int partID = std::rand() % 2;
-		std::cout << partID;
 		switch (partID)
 		{
 		case 0:
 			addMapPart(new MapPart1(), i * 5000.0f);
 			break;
 		case 1:
-			addMapPart(new MapPart2(), i * 5000.0f);
+			addMapPart(new MapPart1(), i * 5000.0f);
 			break;
 		default:
 			break;

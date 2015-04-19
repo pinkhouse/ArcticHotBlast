@@ -23,8 +23,8 @@ Collider::Collider(sf::Vector2f size, sf::Vector2f position, sf::Vector2f origin
 	this->marker.setFillColor(sf::Color::Transparent);
 	this->marker.setOutlineThickness(1.0f);
 	this->isColliding = false;
-	ID = CollidersDB::instance()->ColliderID;
-	++CollidersDB::instance()->ColliderID;
+	ID = CollidersDB::instance()->ID;
+	++CollidersDB::instance()->ID;
 }
 
 Collider::Collider()

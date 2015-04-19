@@ -15,7 +15,7 @@ public:
 	static std::vector<Collider*>* platforms;
 	static std::vector<Collider*>* enemies;
 	static std::vector<Collider*>* buttons;
-	static int ColliderID;
+	static int ID;
 	void draw(sf::RenderWindow& window);
 	void clearDb();
 protected:

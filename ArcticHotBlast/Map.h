@@ -22,7 +22,7 @@ public:
 	sf::Texture* textureMap;
 	std::deque<sf::Sprite> groundParts;
 	Collider* groundCollider;
-	void update();
+	void update(sf::Time& frameTime);
 	
 private:
 	void addGroundParts(int howMany);

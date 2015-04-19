@@ -13,7 +13,7 @@ public:
 	void addPlatform(Platform* platform);
 	//void addEnemySpawnSpot(sf::Vector2f* enemySpawnSpot);
 	void addItem(Item* item);
-
+	void update(sf::Time& frameTime);
 	std::vector<Platform*> getPlatforms();
 private:
 	std::vector<Platform*> platforms;

@@ -7,13 +7,13 @@ class Upgrade :
 {
 public:
 	Upgrade();
-	Upgrade(TypeID typeID);
+	Upgrade(TypeID typeID, sf::Vector2f position);
 	virtual ~Upgrade();
 
-	virtual bool update();
+	virtual bool update(sf::Time& frameTime);
 	void setTypeID(TypeID typeID);
 
 private:
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+	virtual void initialize();
 };
 

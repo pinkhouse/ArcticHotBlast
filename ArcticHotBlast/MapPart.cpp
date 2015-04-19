@@ -38,8 +38,20 @@ std::vector<Platform*> MapPart::getPlatforms()
 
 void MapPart::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	for each (Platform *platform in platforms)
+	for(Platform* platform : platforms)
 	{
 		platform->draw(target, states);
+	}
+	for (Item* item : items)
+	{
+		item->draw(target, states);
+	}
+}
+
+void MapPart::update(sf::Time& frameTime)
+{
+	for (Item* item : items)
+	{
+		item->update(frameTime);
 	}
 }

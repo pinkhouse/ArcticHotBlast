@@ -8,12 +8,13 @@ class Coin :
 {
 public:
 	Coin();
+	Coin(sf::Vector2f position);
 	virtual ~Coin();
 
 	virtual bool update(sf::Time& frameTime);
 
 private:
 	Animation* coinAnimation;
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+	virtual void initialize();
 };
 

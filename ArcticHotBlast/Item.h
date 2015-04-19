@@ -7,7 +7,7 @@ enum class TypeID
 	Coin,
 	Dyfuser,
 	EnginePart,
-	Baterry
+	Battery
 };
 
 class Item :
@@ -15,13 +15,14 @@ class Item :
 {
 public:
 	virtual ~Item();
-	virtual bool update() = 0;
-
+	virtual bool update(sf::Time& frameTime) = 0;
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+	Collider* collider;
 protected:
 	Item();
 	sf::Sprite item;
-	Collider itemCollider;
 	sf::Texture* textureItem;
 	TypeID idType;
+	virtual void initialize() = 0;
 };
 

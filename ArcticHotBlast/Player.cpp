@@ -35,7 +35,6 @@ Player::~Player()
 
 bool Player::update(sf::Time& frameTime, sf::Event &event)
 {
-	//std::cout << body.getPosition().x << " " << body.getPosition().y << "\n";
 	this->frameTime = &frameTime;
 	this->checkInput(event);
 	potentialEnergy();

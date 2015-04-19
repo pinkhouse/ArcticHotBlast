@@ -3,34 +3,35 @@
 
 Upgrade::Upgrade()
 {
-	this->textureItem = AssetLibrary::instance()->textureMap;
-	this->item.setTextureRect(sf::IntRect(256, 0, 288, 32));
+	initialize();
 }
 
 
-Upgrade::Upgrade(TypeID typeID)
+Upgrade::Upgrade(TypeID typeID, sf::Vector2f position)
 {
 	this->idType = typeID;
+	item.setPosition(position);
+	initialize();
+}
+
+void Upgrade::initialize()
+{
 	this->textureItem = AssetLibrary::instance()->textureMap;
-	this->item.setTextureRect(sf::IntRect(160, 32, 192, 64));
+	this->item.setTexture(*textureItem);
+	this->item.setTextureRect(sf::IntRect(256, 0, 32, 32));
 }
 
 Upgrade::~Upgrade()
 {
 }
 
-bool Upgrade::update()
+bool Upgrade::update(sf::Time& frameTime)
 {
-	itemCollider.update(item.getPosition());
+	collider->update(item.getPosition());
 	return false;
 }
 
 void Upgrade::setTypeID(TypeID typeID)
 {
 	this->idType = typeID;
-}
-
-void Upgrade::draw(sf::RenderTarget& target, sf::RenderStates states) const
-{
-	target.draw(item);
 }
