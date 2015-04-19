@@ -120,32 +120,6 @@ bool Player::update(sf::Time& frameTime, sf::Event &event)
 		}
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	if (!touchingBorder)
 	{
 		this->body.move(currentSpeed * frameTime.asSeconds(), 0);

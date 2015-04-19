@@ -13,8 +13,8 @@ public:
 	static std::vector<Collider*>* obstacles;
 	static std::vector<Item*>* items;
 	static std::vector<Collider*>* platforms;
-	static std::vector<Collider*>* enemies;
 	static std::vector<Collider*>* buttons;
+	static int collidersID;
 	static int ID;
 	void draw(sf::RenderWindow& window);
 	void clearDb();

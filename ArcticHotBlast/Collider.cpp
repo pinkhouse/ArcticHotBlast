@@ -23,8 +23,8 @@ Collider::Collider(sf::Vector2f size, sf::Vector2f position, sf::Vector2f origin
 	this->marker.setFillColor(sf::Color::Transparent);
 	this->marker.setOutlineThickness(1.0f);
 	this->isColliding = false;
-	ID = CollidersDB::instance()->ID;
-	++CollidersDB::instance()->ID;
+	ID = CollidersDB::instance()->collidersID;
+	++CollidersDB::instance()->collidersID;
 }
 
 Collider::Collider()
@@ -48,6 +48,7 @@ void Collider::update(sf::Vector2f position)
 
 sf::FloatRect Collider::getBounds()
 {
+	
 	return this->marker.getGlobalBounds();
 }
 

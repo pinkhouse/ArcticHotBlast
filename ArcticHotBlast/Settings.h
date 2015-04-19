@@ -4,6 +4,5 @@ class Settings
 public:
 	Settings();
 	~Settings();
-
 };
 

@@ -12,6 +12,7 @@ Map::Map()
 	generateMap(3);
 	offScreenCleared[0] = false;
 	offScreenCleared[1] = false;
+	pinguin = new Pinguin(sf::Vector2f(300, 6));
 }
 
 Map::~Map()
@@ -28,6 +29,7 @@ void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
 		mapPart->draw(target, states);
 	}
+	target.draw(*pinguin);
 }
 
 void Map::addGroundParts(int howMany)
@@ -44,12 +46,14 @@ void Map::addGroundParts(int howMany)
 
 void Map::update(sf::Time& frameTime)
 {
+
 	scrollGround();
 	clearOffScreen();
 	for (MapPart* mapPart : mapParts)
 	{
 		mapPart->update(frameTime);
 	}
+	pinguin->update(frameTime);
 }
 
 void Map::addMapPart(MapPartBuilder* mapPartBuilder, float startingPoint)
