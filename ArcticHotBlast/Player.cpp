@@ -5,7 +5,7 @@
 
 Player::Player(sf::Vector2f position)
 {
-	textureBody = AssetLibrary::instance()->textureBody;
+	textureBody = AssetLibrary::instance()->textureBodyPlayer;
 	body.setTexture(*textureBody);
 	body.setTextureRect(sf::IntRect(0, 0, 96, 128));
 	this->body.setOrigin(body.getLocalBounds().width/2, body.getLocalBounds().height);
@@ -26,6 +26,12 @@ Player::Player(sf::Vector2f position)
 	this->walkLeft = new Animation(body, 3, 12.0f, sf::Vector2i(0, 128), sf::Vector2i(96, 128));
 	this->stayRight = new Animation(body, 2, 4.0f, sf::Vector2i(0, 256), sf::Vector2i(96, 128));
 	this->stayLeft = new Animation(body, 2, 4.0f, sf::Vector2i(192, 256), sf::Vector2i(96, 128));
+
+	this->airRight = new Animation(body, 1, 0, sf::Vector2i(96, 384), sf::Vector2i(96, 128));
+	this->airLeft = new Animation(body, 1, 0, sf::Vector2i(96, 512), sf::Vector2i(96, 128));
+
+	this->jumpLeft = new Animation(body, 1, 0, sf::Vector2i(0, 512), sf::Vector2i(96, 128));
+	this->jumpRight = new Animation(body, 1, 0, sf::Vector2i(0, 384), sf::Vector2i(96, 128));
 }
 
 Player::~Player()
@@ -35,69 +41,74 @@ Player::~Player()
 
 bool Player::update(sf::Time& frameTime, sf::Event &event)
 {
-	//std::cout << body.getPosition().x << " " << body.getPosition().y << "\n";
 	this->frameTime = &frameTime;
 	this->checkInput(event);
 	potentialEnergy();
 	if (collider->checkCollision(*CollidersDB::instance()->ground))
 	{
 		isGrounded = true;
-		body.setPosition(body.getPosition().x, CollidersDB::instance()->ground->getBounds().top-1);
+		body.setPosition(body.getPosition().x, CollidersDB::instance()->ground->getBounds().top - 1);
 	}
 	if (!isGrounded)
 	{
 		this->body.move(0, fallingSpeed * frameTime.asSeconds());
 	}
 
-	if (currentSpeed != 0.0f)
+
+	if (fallingSpeed >= 0)
 	{
-		if (currentSpeed > 0.0)
+		if (currentSpeed != 0.0f)
 		{
-			if (facingRight)
+			if (currentSpeed > 0.0)
 			{
-				walkRight->play(frameTime);
+				if (facingRight)
+				{
+					walkRight->play(frameTime);
+				}
+				else
+				{
+					walkLeft->playB(frameTime);
+				}
 			}
 			else
 			{
-				walkLeft->playB(frameTime);
+				if (!facingRight)
+				{
+					walkLeft->play(frameTime);
+				}
+				else
+				{
+					walkRight->playB(frameTime);
+				}
+			}
+		}
+	}
+	else
+	{
+		if (fallingSpeed > -575 && fallingSpeed < -500)
+		{
+			if (!facingRight)
+			{
+				jumpLeft->play(frameTime);
+			}
+			else
+			{
+				jumpRight->playB(frameTime);
 			}
 		}
 		else
 		{
 			if (!facingRight)
 			{
-				walkLeft->play(frameTime);
+				airLeft->play(frameTime);
 			}
 			else
 			{
-				walkRight->playB(frameTime);
+				airRight->playB(frameTime);
 			}
-		}
-		if (!touchingBorder)
-		{
-			this->body.move(currentSpeed * frameTime.asSeconds(), 0);
-			
-		}
-		else
-		{
-			if (currentSpeed > 0.0f)
-			{
-				this->body.move(currentSpeed * frameTime.asSeconds(), 0);
-				touchingBorder = false;
-			}
-			else
-			{
-				currentSpeed = 0.0f;
-			}
-		}
-		if (collider->checkCollision(*CollidersDB::instance()->leftBorder))
-		{
-			touchingBorder = true;
-			body.setPosition(CollidersDB::instance()->leftBorder->getBounds().left +
-				CollidersDB::instance()->leftBorder->getBounds().width + collider->getBounds().width/2, body.getPosition().y);
 		}
 	}
-	else
+	if (currentSpeed == 0 && fallingSpeed == 0)
 	{
 		if (facingRight)
 		{
@@ -108,6 +119,57 @@ bool Player::update(sf::Time& frameTime, sf::Event &event)
 			stayLeft->play(frameTime);
 		}
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	if (!touchingBorder)
+	{
+		this->body.move(currentSpeed * frameTime.asSeconds(), 0);
+	}
+	else
+	{
+		if (currentSpeed > 0.0f)
+		{
+			this->body.move(currentSpeed * frameTime.asSeconds(), 0);
+			touchingBorder = false;
+		}
+		else
+		{
+			currentSpeed = 0.0f;
+		}
+	}
+	if (collider->checkCollision(*CollidersDB::instance()->leftBorder))
+	{
+		touchingBorder = true;
+		body.setPosition(CollidersDB::instance()->leftBorder->getBounds().left +
+			CollidersDB::instance()->leftBorder->getBounds().width + collider->getBounds().width / 2, body.getPosition().y);
+	}
+
+
 	updateHookPoint();
 	this->facingRight = weapon.update(armHookPoint, event);
 	collider->update(body.getPosition());

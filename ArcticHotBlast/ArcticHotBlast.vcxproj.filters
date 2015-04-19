@@ -114,6 +114,9 @@
     <ClCompile Include="MapPart4.cpp">
       <Filter>Source Files\Map\MapParts</Filter>
     </ClCompile>
+    <ClCompile Include="SnowBall.cpp">
+      <Filter>Source Files\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -187,6 +190,9 @@
     </ClInclude>
     <ClInclude Include="MapPart4.h">
       <Filter>Header Files\Map\MapParts</Filter>
+    </ClInclude>
+    <ClInclude Include="SnowBall.h">
+      <Filter>Header Files\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

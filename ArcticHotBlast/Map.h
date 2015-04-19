@@ -4,13 +4,13 @@
 #include "Collider.h"
 #include "CollidersDB.h"
 #include "MapPartBuilder.h"
+
 #pragma region map parts
 #include "MapPart1.h"
 #include "MapPart2.h"
 #include "MapPart3.h"
 #include "MapPart4.h"
 #pragma endregion
-
 
 
 class Map : public sf::Drawable
@@ -32,5 +32,7 @@ private:
 	bool offScreenCleared[2];
 	void scrollGround();
 	void generateMap(int numberOfParts);
+
+	
 };
 
