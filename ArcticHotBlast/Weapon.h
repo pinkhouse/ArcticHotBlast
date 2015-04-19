@@ -17,8 +17,6 @@ public:
 private:
 	sf::Sprite weapon;
 	sf::Texture* textureWeapon;
-
-	sf::Vector2f armLocation;
 	int armRotation;
 	bool armRotated;
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

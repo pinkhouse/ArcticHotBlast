@@ -2,6 +2,14 @@
 #include "AssetLibrary.h"
 #include "Collider.h"
 
+enum class TypeID
+{
+	Coin,
+	Dyfuser,
+	EnginePart,
+	Baterry
+};
+
 class Item :
 	public sf::Drawable
 {
@@ -14,6 +22,6 @@ protected:
 	sf::Sprite item;
 	Collider itemCollider;
 	sf::Texture* textureItem;
-	int idType;
+	TypeID idType;
 };
 

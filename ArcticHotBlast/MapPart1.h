@@ -12,5 +12,7 @@ public:
 	~MapPart1();
 protected:
 	
+private:
+	void createPlatform(float x, float y, int z);
 };
 

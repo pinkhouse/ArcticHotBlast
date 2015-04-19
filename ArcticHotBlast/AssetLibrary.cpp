@@ -7,10 +7,10 @@ sf::RenderWindow* AssetLibrary::mainWindow = 0;
 sf::Texture* AssetLibrary::textureMap = 0;
 sf::Texture* AssetLibrary::textureBody = 0;
 sf::Texture* AssetLibrary::textureWeapon = 0;
+
 AssetLibrary::AssetLibrary()
 {
 }
-
 
 AssetLibrary::~AssetLibrary()
 {
