@@ -23,10 +23,10 @@ public:
 	std::deque<sf::Sprite> groundParts;
 	Collider* groundCollider;
 	void update(sf::Time& frameTime);
+	std::vector<MapPart*> mapParts;
 	
 private:
 	void addGroundParts(int howMany);
-	std::vector<MapPart*> mapParts;
 	void addMapPart(MapPartBuilder* mapPartBuilder, float startingPoint);
 	void clearOffScreen();
 	bool offScreenCleared[2];

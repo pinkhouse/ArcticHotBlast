@@ -4,6 +4,7 @@
 #include "Animation.h"
 #include "Collider.h"
 #include "Weapon.h"
+#include "Map.h"
 
 class Player:
 	public sf::Drawable
@@ -12,11 +13,12 @@ public:
 	Player(sf::Vector2f position);
 	~Player();
 
-	bool update(sf::Time& frameTime, sf::Event &event);
+	bool update(sf::Time& frameTime, sf::Event &event, Map& map);
 
 private:
 	sf::Time* frameTime;
 	Collider* collider;
+	int score;
 
 #pragma region Animation
 	Animation* walkRight;
@@ -38,6 +40,7 @@ private:
 #pragma region Physics
 	bool touchingBorder;
 	bool isGrounded;
+	bool standingOnGround;
 	float fallingSpeed;
 	float gravity;
 	float walkSpeed;
@@ -51,7 +54,12 @@ private:
 	void checkInput(sf::Event& event);
 	void potentialEnergy();
 	void checkPlatformsCollision();
+	void checkGroundCollision();
+	void checkBorderCollision();
+	void checkItemsCollisions(Map& map);
+	void move(sf::Time& frameTime);
 	void updateHookPoint();
+	void animate(sf::Time& frameTime);
 #pragma endregion
 
 };

@@ -5,11 +5,11 @@
 
 Player::Player(sf::Vector2f position)
 {
+	score = 0;
 	textureBody = AssetLibrary::instance()->textureBodyPlayer;
 	body.setTexture(*textureBody);
 	body.setTextureRect(sf::IntRect(0, 0, 96, 128));
 	this->body.setOrigin(body.getLocalBounds().width/2, body.getLocalBounds().height);
-
 	this->body.setPosition(position);
 	updateHookPoint();
 	this->weapon = Weapon(armHookPoint);
@@ -17,6 +17,7 @@ Player::Player(sf::Vector2f position)
 	this->walkSpeed = 250.0f;
 	this->currentSpeed = 0.0f;
 	this->isGrounded = false;
+	this->standingOnGround = false;
 	this->touchingBorder = false;
 	this->fallingSpeed = 0.0f;;
 	this->collider = new Collider(sf::Vector2f(56.0f, 116.0f), this->body.getPosition(), sf::Vector2f(28.0f,116));
@@ -26,10 +27,8 @@ Player::Player(sf::Vector2f position)
 	this->walkLeft = new Animation(body, 3, 12.0f, sf::Vector2i(0, 128), sf::Vector2i(96, 128));
 	this->stayRight = new Animation(body, 2, 4.0f, sf::Vector2i(0, 256), sf::Vector2i(96, 128));
 	this->stayLeft = new Animation(body, 2, 4.0f, sf::Vector2i(192, 256), sf::Vector2i(96, 128));
-
 	this->airRight = new Animation(body, 1, 0, sf::Vector2i(96, 384), sf::Vector2i(96, 128));
 	this->airLeft = new Animation(body, 1, 0, sf::Vector2i(96, 512), sf::Vector2i(96, 128));
-
 	this->jumpLeft = new Animation(body, 1, 0, sf::Vector2i(0, 512), sf::Vector2i(96, 128));
 	this->jumpRight = new Animation(body, 1, 0, sf::Vector2i(0, 384), sf::Vector2i(96, 128));
 }
@@ -39,145 +38,20 @@ Player::~Player()
 
 }
 
-bool Player::update(sf::Time& frameTime, sf::Event &event)
+bool Player::update(sf::Time& frameTime, sf::Event &event, Map& map)
 {
 	this->frameTime = &frameTime;
 	this->checkInput(event);
 	potentialEnergy();
-	if (collider->checkCollision(*CollidersDB::instance()->ground))
-	{
-		isGrounded = true;
-		body.setPosition(body.getPosition().x, CollidersDB::instance()->ground->getBounds().top - 1);
-	}
-	if (!isGrounded)
-	{
-		this->body.move(0, fallingSpeed * frameTime.asSeconds());
-	}
-
-
-	if (fallingSpeed >= 0)
-	{
-		if (currentSpeed != 0.0f)
-		{
-			if (currentSpeed > 0.0)
-			{
-				if (facingRight)
-				{
-					walkRight->play(frameTime);
-				}
-				else
-				{
-					walkLeft->playB(frameTime);
-				}
-			}
-			else
-			{
-				if (!facingRight)
-				{
-					walkLeft->play(frameTime);
-				}
-				else
-				{
-					walkRight->playB(frameTime);
-				}
-			}
-		}
-	}
-	else
-	{
-		if (fallingSpeed > -575 && fallingSpeed < -500)
-		{
-			if (!facingRight)
-			{
-				jumpLeft->play(frameTime);
-			}
-			else
-			{
-				jumpRight->playB(frameTime);
-			}
-		}
-		else
-		{
-			if (!facingRight)
-			{
-				airLeft->play(frameTime);
-			}
-			else
-			{
-				airRight->playB(frameTime);
-			}
-		}
-	}
-	if (currentSpeed == 0 && fallingSpeed == 0)
-	{
-		if (facingRight)
-		{
-			stayRight->play(frameTime);
-		}
-		else
-		{
-			stayLeft->play(frameTime);
-		}
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	if (!touchingBorder)
-	{
-		this->body.move(currentSpeed * frameTime.asSeconds(), 0);
-	}
-	else
-	{
-		if (currentSpeed > 0.0f)
-		{
-			this->body.move(currentSpeed * frameTime.asSeconds(), 0);
-			touchingBorder = false;
-		}
-		else
-		{
-			currentSpeed = 0.0f;
-		}
-	}
-	if (collider->checkCollision(*CollidersDB::instance()->leftBorder))
-	{
-		touchingBorder = true;
-		body.setPosition(CollidersDB::instance()->leftBorder->getBounds().left +
-			CollidersDB::instance()->leftBorder->getBounds().width + collider->getBounds().width / 2, body.getPosition().y);
-	}
-
-
+	checkGroundCollision();
+	checkPlatformsCollision();
+	checkItemsCollisions(map);
+	animate(frameTime);
+	move(frameTime);
+	checkBorderCollision();
 	updateHookPoint();
 	this->facingRight = weapon.update(armHookPoint, event);
 	collider->update(body.getPosition());
-	checkPlatformsCollision();
-	if (isGrounded)
-	{
-		fallingSpeed = 0.0f;
-	}
 	return false;
 }
 
@@ -193,6 +67,7 @@ void Player::checkInput(sf::Event& event)
 	{
 		fallingSpeed = -575;
 		isGrounded = false;
+		standingOnGround = false;
 		standingOn = 0;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
@@ -262,13 +137,20 @@ void Player::checkInput(sf::Event& event)
 		}
 	}
 }
+
 void Player::potentialEnergy()
 {
 	if (!isGrounded)
 	{
 		this->fallingSpeed += this->gravity * frameTime->asSeconds();
+		this->body.move(0, fallingSpeed * frameTime->asSeconds());
+	}
+	else
+	{
+		fallingSpeed = 0.0f;
 	}
 }
+
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	if (facingRight)
@@ -285,34 +167,161 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void Player::checkPlatformsCollision()
 {
-	if (standingOn != 0)
+	if (!standingOnGround)
 	{
-		if (!collider->checkCollision(*standingOn))
+		if (standingOn != 0)
 		{
-			this->isGrounded = false;
-			standingOn = 0;
+			if (!collider->checkCollision(*standingOn))
+			{
+				this->isGrounded = false;
+				standingOn = 0;
+			}
+		}
+		else
+		{
+			if (platformsToCheck.size() > 0)
+			{
+				for (Collider* platform : platformsToCheck)
+				{
+					if (collider->checkCollision(*platform))
+					{
+						body.setPosition(sf::Vector2f(body.getPosition().x, platform->getBounds().top + 1));
+						this->isGrounded = true;
+						standingOn = platform;
+					}
+				}
+			}
+			platformsToCheck.clear();
+			for (Collider* platform : *CollidersDB::instance()->platforms)
+			{
+				if (collider->getBounds().top + collider->getBounds().height <= platform->getBounds().top)
+				{
+					platformsToCheck.push_back(platform);
+				}
+			}
+		}
+	}
+}
+
+void Player::animate(sf::Time& frameTime)
+{
+	if (fallingSpeed >= 0)
+	{
+		if (currentSpeed != 0.0f)
+		{
+			if (currentSpeed > 0.0)
+			{
+				if (facingRight)
+				{
+					walkRight->play(frameTime);
+				}
+				else
+				{
+					walkLeft->playB(frameTime);
+				}
+			}
+			else
+			{
+				if (!facingRight)
+				{
+					walkLeft->play(frameTime);
+				}
+				else
+				{
+					walkRight->playB(frameTime);
+				}
+			}
 		}
 	}
 	else
 	{
-		if (platformsToCheck.size() > 0)
+		if (fallingSpeed > -575 && fallingSpeed < -500)
 		{
-			for (Collider* platform : platformsToCheck)
+			if (!facingRight)
 			{
-				if (collider->checkCollision(*platform))
-				{
-					body.setPosition(sf::Vector2f(body.getPosition().x, platform->getBounds().top));
-					this->isGrounded = true;
-					standingOn = platform;
-				}
+				jumpLeft->play(frameTime);
+			}
+			else
+			{
+				jumpRight->playB(frameTime);
 			}
 		}
-		platformsToCheck.clear();
-		for (Collider* platform : *CollidersDB::instance()->platforms)
+		else
 		{
-			if (collider->getBounds().top + collider->getBounds().height <= platform->getBounds().top)
+			if (!facingRight)
 			{
-				platformsToCheck.push_back(platform);
+				airLeft->play(frameTime);
+			}
+			else
+			{
+				airRight->playB(frameTime);
+			}
+		}
+	}
+	if (currentSpeed == 0 && fallingSpeed == 0)
+	{
+		if (facingRight)
+		{
+			stayRight->play(frameTime);
+		}
+		else
+		{
+			stayLeft->play(frameTime);
+		}
+	}
+}
+
+void Player::checkGroundCollision()
+{
+	if (collider->checkCollision(*CollidersDB::instance()->ground) && fallingSpeed >= 0.0f)
+	{
+		isGrounded = true;
+		standingOnGround = true;
+		body.setPosition(body.getPosition().x, CollidersDB::instance()->ground->getBounds().top+1);
+	}
+}
+
+void Player::move(sf::Time& frameTime)
+{
+	if (!touchingBorder)
+	{
+		this->body.move(currentSpeed * frameTime.asSeconds(), 0);
+	}
+	else
+	{
+		if (currentSpeed > 0.0f)
+		{
+			this->body.move(currentSpeed * frameTime.asSeconds(), 0);
+			touchingBorder = false;
+		}
+		else
+		{
+			currentSpeed = 0.0f;
+		}
+	}
+}
+
+void Player::checkBorderCollision()
+{
+	if (collider->checkCollision(*CollidersDB::instance()->leftBorder))
+	{
+		touchingBorder = true;
+		body.setPosition(CollidersDB::instance()->leftBorder->getBounds().left +
+			CollidersDB::instance()->leftBorder->getBounds().width + collider->getBounds().width / 2, body.getPosition().y);
+	}
+}
+
+void Player::checkItemsCollisions(Map& map)
+{
+	for (MapPart* mapPart : map.mapParts)
+	{
+		for (Item* item : mapPart->getItems())
+		{
+			if (collider->checkCollision(*item->collider))
+			{
+				item->taken = true;
+				score += 1;
+				//add point
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 #include "MapPart.h"
 #include <iostream>
+#include <algorithm>
 
 MapPart::MapPart()
 {
@@ -13,7 +14,11 @@ MapPart::~MapPart()
 		delete platform;
 	}
 	platforms.erase(platforms.begin(), platforms.end());
-	platforms.clear();
+	for each (Item *item in items)
+	{
+		delete item;
+	}
+	items.erase(items.begin(), items.end());
 }
 
 void MapPart::addPlatform(Platform* platform)
@@ -36,6 +41,13 @@ std::vector<Platform*> MapPart::getPlatforms()
 	return platforms;
 }
 
+std::vector<Item*> MapPart::getItems()
+{
+	return items;
+}
+
+std::vector<Item*> getItems();
+
 void MapPart::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	for(Platform* platform : platforms)
@@ -50,8 +62,18 @@ void MapPart::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void MapPart::update(sf::Time& frameTime)
 {
+	Item* itemToDelete = 0;
 	for (Item* item : items)
 	{
-		item->update(frameTime);
+		if (item->update(frameTime))
+		{
+			itemToDelete = item;
+		}
+	}
+	
+	if (itemToDelete != 0)
+	{
+		delete itemToDelete;
+		items.erase(std::remove(items.begin(), items.end(), itemToDelete), items.end());
 	}
 }

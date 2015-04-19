@@ -7,7 +7,7 @@ Map::Map()
 {
 	textureMap = AssetLibrary::instance()->textureMap;
 	addGroundParts(6);
-	groundCollider = new Collider(sf::Vector2f(1280.0f, 32.0f), sf::Vector2f(0.0f, 688.0f), sf::Vector2f(0.0f, 0.0f));
+	groundCollider = new Collider(sf::Vector2f(1280.0f, 32.0f), sf::Vector2f(0.0f, 690.0f), sf::Vector2f(0.0f, 0.0f));
 	CollidersDB::ground = groundCollider;
 	generateMap(3);
 	offScreenCleared[0] = false;
@@ -100,7 +100,7 @@ void Map::generateMap(int numberOfParts)
 			addMapPart(new MapPart1(), i * 5000.0f);
 			break;
 		case 1:
-			addMapPart(new MapPart1(), i * 5000.0f);
+			addMapPart(new MapPart2(), i * 5000.0f);
 			break;
 		default:
 			break;

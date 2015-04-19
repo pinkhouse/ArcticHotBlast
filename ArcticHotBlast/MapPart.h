@@ -15,6 +15,7 @@ public:
 	void addItem(Item* item);
 	void update(sf::Time& frameTime);
 	std::vector<Platform*> getPlatforms();
+	std::vector<Item*> getItems();
 private:
 	std::vector<Platform*> platforms;
 	//std::vector<sf::Vector2f*> enemySpawnSpots;

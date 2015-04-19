@@ -18,6 +18,12 @@ public:
 	virtual bool update(sf::Time& frameTime) = 0;
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	Collider* collider;
+	bool taken;
+	int ID;
+	inline bool operator==(const Collider &i1)
+	{
+		return (i1.ID == this->ID);
+	}
 protected:
 	Item();
 	sf::Sprite item;

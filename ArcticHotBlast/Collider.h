@@ -20,7 +20,10 @@ public:
 	sf::Vector2f getPosition();
 	sf::Vector2f getCenter();
 	int ID;
-	friend bool operator==(const Collider &c1, const Collider &c2);
+	inline bool operator==(const Collider &c1)
+	{
+		return (c1.ID == this->ID);
+	}
 private:
 	sf::RectangleShape marker;
 	bool _checkCollision(Collider& collider1, Collider& collider2);
