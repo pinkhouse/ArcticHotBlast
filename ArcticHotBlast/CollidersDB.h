@@ -13,7 +13,6 @@ public:
 	static std::vector<Collider*>* obstacles;
 	static std::vector<Collider*>* items;
 	static std::vector<Collider*>* platforms;
-	static std::vector<Collider*>* enemies;
 	static std::vector<Collider*>* buttons;
 	static int collidersID;
 	static int ID;

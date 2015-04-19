@@ -3,7 +3,7 @@
 
 Game::Game()
 {
-	devMode = true;
+	devMode = false;
 	collidersDB = CollidersDB::instance();
 	assetLibrary = AssetLibrary::instance();
 	assetLibrary->initialize();

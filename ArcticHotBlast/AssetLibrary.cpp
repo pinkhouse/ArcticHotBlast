@@ -43,7 +43,7 @@ void AssetLibrary::loadTextures()
 	}
 	if (this->texturePinguin->loadFromFile("data/img/npc/pinguin.png"))
 	{
-		std::cout << "MAP TEXTURE LOADED\n";
+		std::cout << "PINGUIN TEXTURE LOADED\n";
 	}
 }
 

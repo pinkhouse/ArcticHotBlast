@@ -169,38 +169,38 @@ void Player::checkPlatformsCollision()
 {
 	if (!standingOnGround)
 	{
-		if (standingOn != 0)
+	if (standingOn != 0)
+	{
+		if (!collider->checkCollision(*standingOn))
 		{
-			if (!collider->checkCollision(*standingOn))
+			this->isGrounded = false;
+			standingOn = 0;
+		}
+	}
+	else
+	{
+		if (platformsToCheck.size() > 0)
+		{
+			for (Collider* platform : platformsToCheck)
 			{
-				this->isGrounded = false;
-				standingOn = 0;
+				if (collider->checkCollision(*platform))
+				{
+						body.setPosition(sf::Vector2f(body.getPosition().x, platform->getBounds().top + 1));
+					this->isGrounded = true;
+					standingOn = platform;
+				}
 			}
 		}
-		else
+		platformsToCheck.clear();
+		for (Collider* platform : *CollidersDB::instance()->platforms)
 		{
-			if (platformsToCheck.size() > 0)
+			if (collider->getBounds().top + collider->getBounds().height <= platform->getBounds().top)
 			{
-				for (Collider* platform : platformsToCheck)
-				{
-					if (collider->checkCollision(*platform))
-					{
-						body.setPosition(sf::Vector2f(body.getPosition().x, platform->getBounds().top + 1));
-						this->isGrounded = true;
-						standingOn = platform;
-					}
-				}
-			}
-			platformsToCheck.clear();
-			for (Collider* platform : *CollidersDB::instance()->platforms)
-			{
-				if (collider->getBounds().top + collider->getBounds().height <= platform->getBounds().top)
-				{
-					platformsToCheck.push_back(platform);
-				}
+				platformsToCheck.push_back(platform);
 			}
 		}
 	}
+}
 }
 
 void Player::animate(sf::Time& frameTime)
@@ -277,7 +277,7 @@ void Player::checkGroundCollision()
 	{
 		isGrounded = true;
 		standingOnGround = true;
-		body.setPosition(body.getPosition().x, CollidersDB::instance()->ground->getBounds().top+1);
+		body.setPosition(body.getPosition().x, CollidersDB::instance()->ground->getBounds().top + 1);
 	}
 }
 

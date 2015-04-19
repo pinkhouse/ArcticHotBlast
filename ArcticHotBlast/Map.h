@@ -12,7 +12,7 @@
 #include "MapPart4.h"
 #pragma endregion
 
-
+#include "Pinguin.h"
 class Map : public sf::Drawable
 {
 public:
@@ -33,6 +33,6 @@ private:
 	void scrollGround();
 	void generateMap(int numberOfParts);
 
-	
+	Pinguin* pinguin;
 };
 

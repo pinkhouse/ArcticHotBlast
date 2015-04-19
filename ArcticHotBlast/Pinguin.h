@@ -16,10 +16,15 @@ public:
 
 private:
 	virtual void move();
+	virtual void potentialEnergy(sf::Time& frameTime);
 	void jump();
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	sf::Sprite pinguin;
 	sf::Texture* texturePinguin;
-	Collider* atackCollider;
+
+	Collider* standingOn;
+	std::vector<Collider*>platformsToCheck;
+	sf::Time* frameTime;
+	virtual void checkPlatformsCollision();
 };
 
